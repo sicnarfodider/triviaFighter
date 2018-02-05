@@ -1,5 +1,5 @@
 # TRIVIA FIGHTER
-A Fighting Game with a core trivia mechanic. A project to exercise the use of WEB APIs using AJAX.
+A two player Marvel vs DC fighting game with a core trivia mechanic. A project to exercise the use of WEB APIs using AJAX.
 
 ### Requirements
 - HTML5
