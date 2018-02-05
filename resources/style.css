@@ -1,0 +1,655 @@
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+@font-face {
+    font-family: ss4;
+    src: url(Font/SSF4.ttf)
+}
+@font-face {
+    font-family: fighting;
+    src: url(Font/Fighting.TTF)
+}
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/*****************  player selection modal ******************/
+
+
+
+.playerOnHoverLeft, .playerOnHoverRight {
+  width: 30vw;
+  height: 100vh;
+}
+
+.modalContainer {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    background-image: url('images/backgrounds/particleBG.gif');
+    background-position: center;
+    background-size: cover;
+    background-color: #475eff;
+    display: none;
+}
+
+.playerContainer {
+    height: 72vh;
+    width: 30vw;
+    top: 2.5vh;
+    position: absolute;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+@keyframes spinner {
+    0% {
+      transform: rotateY(0deg);
+    }
+    50% {
+      transform: rotateY(180deg);
+    }
+    100% {
+      transform: rotateY(0deg);
+    }
+}
+
+.infoTextContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+}
+
+.infoHeader {
+  color: #ffdd00;
+}
+.infoHeaderName, .infoHeaderNameRight {
+    color: yellow;
+}
+.infoHeaderPower, .infoHeaderPowerRight {
+    color: yellow;
+}
+.infoHeaderOccupation, .infoHeaderOccupationRight {
+    color: yellow;
+}
+
+.characterName {
+    font-family: fighting;
+    font-size: 6vmin;
+    color: #c7f62d;
+    position: absolute;
+    top: 70vh;
+    width: 25%;
+    text-align: center;
+    text-shadow: 5px 5px 10px black;
+}
+
+.characterNameLeft {
+    left: 2.5vw;
+}
+
+.characterNameRight {
+    right: 3vw;
+}
+
+.playerInfo {
+    font-family: 'Ubuntu', sans-serif;
+    height: 20vh;
+    width: 22vw;
+    position: absolute;
+    top: 76vh;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 20px;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.playerInfoLeft {
+    left: 4vw;
+}
+
+.playerInfoRight {
+    right: 4vw;
+}
+
+.playerContainerRight {
+    right: 0%;
+    transform: scaleX(-1);
+}
+
+.playerSelectionContainer {
+    height: 100vh;
+    width: 40vw;
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.row {
+    width: 46.5vmin;
+    height: 15vmin;
+    text-align: center;
+    position: relative;
+    margin: 0.75vmin auto;
+}
+
+.infoRow {
+  font-size: 2.5vmin;
+  color: whitesmoke;
+  margin: 0.5vh auto;
+  text-align: center;
+}
+
+.gameTitle {
+  color: #ffdd00;
+  width: 100%;
+  text-shadow: 5px 5px 10px black;
+  font-size: 6vmin;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: ss4;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.row:last-child {
+  position: absolute;
+  bottom: 3vh;
+  margin: 0 auto;
+  border: 5px solid darkred;
+  color: white;
+  border-radius: 5%;
+  background-color: red;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 40px black;
+  cursor: pointer;
+}
+
+.row:last-child:hover {
+  border-color: yellow;
+  box-shadow: 0 0 80px black;
+}
+
+.playerAvatar {
+    border: 3px solid black;
+    border-radius: 5%;
+    display: inline-block;
+    width: 15vmin;
+    height: 15vmin;
+    cursor: pointer;
+}
+
+.playerAvatar:first-child {
+  margin-right: 0.75vmin;
+  left: 0;
+  position: absolute;
+}
+
+.playerAvatar:last-child {
+  margin-left: 0.75vmin;
+  position: absolute;
+  right: 0;
+}
+
+.playerAvatar:hover {
+    border-color: yellow;
+}
+
+.playerAvatarClicked {
+    filter: grayscale(1)
+}
+
+.playButton {
+    font-family: fighting;
+    font-size: 10vmin;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-shadow: 0 0 20px black;
+}
+
+.playButton:focus {
+    outline: 0;
+}
+
+#ironman, #deadpool, #batman, #magneto, #captainamerica, #domino, #thor, #wonderwoman, #mystique, #scarletwitch, #superman, #thething {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#ironman {
+    background-image: url('images/avatars/iron-man.png');
+}
+
+#deadpool {
+    background-image: url('images/avatars/deadpool.png');
+}
+
+#batman {
+    background-image: url('images/avatars/batman.png');
+}
+
+#magneto {
+    background-image: url('images/avatars/magneto.png');
+}
+
+#captainamerica {
+    background-image: url('images/avatars/captain-america.png');
+}
+
+#domino {
+    background-image: url('images/avatars/domino.png');
+}
+
+#thor {
+    background-image: url('images/avatars/thor.png');
+}
+
+#wonderwoman {
+    background-image: url('images/avatars/wonder-woman.png');
+}
+
+#mystique {
+    background-image: url('images/avatars/mystique.png');
+}
+
+#scarletwitch {
+    background-image: url('images/avatars/scarlet-witch.png');
+}
+
+#superman {
+    background-image: url('images/avatars/superman.png');
+}
+
+#thething {
+    background-image: url('images/avatars/thing.png');
+}
+
+
+/************************** gameboard ****************************/
+
+
+
+.gameBoard {
+    height: 100vh;
+    width: 100vw;
+    display: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.hitPoints {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    background-image: url('https://media.giphy.com/media/lDKVeTHWDPSuc/giphy.gif');
+    background-repeat: repeat;
+    background-position: center;
+    transition: 2s;
+}
+.left{
+    position: absolute;
+    right: 0;
+}
+.statsContainer {
+    height: 17vh;
+    width: 100vw;
+    position: relative;
+}
+
+.hitPointsContainerLeft, .hitPointsContainerRight {
+    width: 40vw;
+    height: 8vh;
+    border: 4px solid yellow;
+    position: absolute;
+    top: 2vh;
+}
+
+.hitPointsContainerLeft {
+    left: 0.5vw;
+}
+
+.hitPointsContainerRight {
+    right: 0.5vw;
+}
+
+.timer {
+    height: 12vh;
+    width: 12vw;
+    position: absolute;
+    top: 1.75%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: fighting;
+    background-color: transparent;
+    color: blue;
+    font-size: 12vmin;
+    text-shadow: 0 0 30px white;
+    text-align: center;
+}
+
+#p1name {
+  display: inline-block;
+    color: whitesmoke;
+    position: absolute;
+    font-family: fighting;
+    font-size: 3vmin;
+    bottom: 2vh;
+    left: 1vw;
+    text-shadow: 0 0 10px black;
+    letter-spacing: 3px;
+}
+
+#p2name {
+  display: inline-block;
+    color: whitesmoke;
+    position: absolute;
+    font-family: fighting;
+    font-size: 3vmin;
+    bottom: 2vh;
+    right: 1vw;
+    text-shadow: 0 0 10px black;
+    letter-spacing: 3px;
+}
+
+.currentTime {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  display: inline-block;
+}
+
+.player1, .player2 {
+    height: 85vh;
+    width: 25vw;
+    position: absolute;
+    top: 58%;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.player1 {
+    left: 13vw;
+    transform: translate(-50%, -50%);
+}
+
+.player2 {
+    left: 87vw;
+    transform: translate(-50%, -50%) scaleX(-1);
+}
+
+.questionModal {
+    width: 45vw;
+    height: 35vw;
+    border: 4px solid silver;
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: sans-serif;
+    background-color: rgba(140,140,140,0.75);
+    border-radius: 5vmin;
+    opacity: 0;
+    transition: 0.75s;
+}
+
+.questionModalShow {
+    opacity: 1;
+}
+
+.questionContainer, .answerContainer {
+    font-family: 'Ubuntu', sans-serif;
+    width: 90%;
+    height: 40%;
+    border: 1px solid whitesmoke;
+    margin: 5% auto;
+    font-size: 2vmin;
+    background-color: #d3d2d2;
+    border-radius: 3vmin;
+}
+
+.answer {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 2vmin;
+    width: 45%;
+    height: 20%;
+    border: 1px solid whitesmoke;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 5% 0;
+    background-color: rgb(65,61,61);
+    color: whitesmoke;
+    border-radius: 1vmin;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.answer:hover{
+    background-color: gray;
+}
+
+.category{
+    display: block;
+    position: absolute;
+    opacity: 0.5;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+/*************************** winner modal **************************/
+
+
+
+
+.winnerModal {
+    height: 100vh;
+    width: 100vw;
+    border: 1px solid black;
+    display: none;
+    background-image: url('images/backgrounds/background6.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.modal{
+    border: 1px solid black;
+}
+
+.winningCharacter{
+    top: 10%;
+    left: 10%;
+    width: 25vw;
+    height: 80vh;
+    position: absolute;
+    animation: spin 4s infinite;
+    animation-timing-function: cubic-bezier(0.1, 0.2, 0.3, 1.5);
+    animation-iteration-count: 1;
+    transform-style: preserve-3d;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+@keyframes spin{
+    from {transform: rotateY(0deg)}
+    to {transform: rotateY(360deg)}
+}
+
+.winningCharacter img{
+    width: 100%;
+    height: 100%;
+}
+
+.chuckNorrisQuote{
+    top: 25%;
+    left: 40%;
+    width: 50vw;
+    height: 40vh;
+    border: 1px solid;
+    border-radius: 20px;
+    position: absolute;
+    background-color: rgba(0,0,0,0.6);
+    padding: 1%;
+}
+
+.chuckNorrisQuote p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    font-size: 5vmin;
+    font-family: fighting;
+    color: white;
+    letter-spacing: 2px;
+    text-align: center;
+    margin: 0;
+}
+
+.restart {
+    top: 70%;
+    left: 70%;
+    height: 10vh;
+    position: absolute;
+}
+
+.playAgain:focus{
+    outline: none;
+}
+
+.playAgain:active{
+    transform: translateY(5px);
+}
+.playAgain:hover{
+    color: red;
+    text-shadow: 0px 0px 20px white;
+}
+
+.playAgain{
+    border: 0px solid;
+    height: 100%;
+    font-family: ss4;
+    font-size: 5vmin;
+    background-color: rgba(0,0,0,0);
+    color: white;
+    box-shadow: none;
+    text-shadow: 0px 0px 20px black;
+    cursor: pointer;
+}
+
+
+
+/*********************** Ready modal ************************/
+
+
+
+
+.readyBanner {
+  width: 100vw;
+  height: 25vh;
+  border-top: 7px solid darkred;
+  border-bottom: 7px solid darkred;
+  background-color: red;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  box-shadow: 0px 0px 120px black;
+}
+
+.readyButton {
+  width: 40vh;
+  height: 30vh;
+  border: 7px solid darkred;
+  background-color: red;
+  border-radius: 47%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: white;
+  font-family: fighting, ss4;
+  text-align: center;
+  padding-top: 0vh;
+  font-size: 11vh;
+  text-shadow: 3px 3px 13px black;
+  box-shadow: 0px 0px 60px black;
+  user-select: none;
+  cursor: pointer;
+}
+
+.readyButton:hover {
+  border: 7px solid yellow;
+}
+
+
+/*=============== Load Screen ==================*/
+
+.loadScreen {
+  background-image: url('images/backgrounds/particleBG.gif');
+  width: 100vw;
+  height: 100vh;
+  background-color: #475eff;
+}
+
+.loadingTitle {
+  color: yellow;
+  text-shadow: 0 0 20px black;
+  font-family: ss4;
+  font-size: 10vmin;
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.loadingBarContainer {
+  border: 4px solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50vw;
+  border-radius: 5px;
+  height: 10vh;
+  transform: translate(-50%,-50%);
+}
+
+.loadingBar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 10%;
+  background-color: red;
+}
