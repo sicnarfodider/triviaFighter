@@ -7,9 +7,9 @@ A Fighting Game with a core trivia mechanic. A project to exercise the use of WE
 - jQuery
 - AJAX
 - WEB APIs
-    -[superhero API](http://www.superheroapi.com/)
-    -[trivia API](https://opentdb.com)
-    -[chuck norrise API](https://api.chucknorris.io/)
+    - [superhero API](http://www.superheroapi.com/)
+    - [trivia API](https://opentdb.com)
+    - [chuck norrise API](https://api.chucknorris.io/)
 
 
 ### Team
