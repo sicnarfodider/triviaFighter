@@ -33,7 +33,7 @@ function addClickHandlers(){
     });
 
     $('.playAgain').click(function(){
-        game.controller.newGame();
+        game.endGame();
         $('.loadScreen').hide();
         $('.modalContainer').fadeIn(2000);
     });
@@ -52,7 +52,6 @@ function addClickHandlers(){
 function GameModel(){
     this.view = new View();
     this.controller = new Controller();
-    // this.gameState = this.states.gameStart; //playerSelection, trivia, ready, endgame
     this.token = null;
     this.avatarClickable = true;
     this.playButtonClickable = false;
@@ -67,7 +66,29 @@ function GameModel(){
         //1 : Player {}
         //2 : Player {}
         //built using the add
-    };
+    }
+    this.endGame = function(){
+        this.token = null;
+        this.avatarClickable = true;
+        this.playButtonClickable = false;
+        this.bothPlayersSelected = false;
+        this.turn = 1;
+        this.roundTime = 60; //just a starting number, tracks amount of time left in round;
+        // // this.questionsLeft = 10; //tracks the number of questions asked
+        this.roundTimer = null;
+        this.apiResponse = 0;
+        this.questions = {};
+        this.players = {
+            //1 : Player {}
+            //2 : Player {}
+            //built using the add
+        }
+        $('.chuckNorrisQuote p').empty();
+        $('.hitPoints').css('width','100%');
+        $('.emptyMe').removeClass('characterName');
+        $('.playerAvatar').removeClass('playerAvatarClicked');
+        game.controller.getSessionToken();
+    }
 
     this.availableCharacters = {
         'deadpool' : {
@@ -464,37 +485,37 @@ function Controller(){
 
   };
 
-      this.retrieveQuestions = function (diff) {
-          $.ajax({
-              method: 'GET',
-              dataType: 'JSON',
-              data: {
-                  'amount': 50,
-                  difficulty: diff,
-                  type: 'multiple',
-                  token: game.token
-              },
-              url: 'https://opentdb.com/api.php',
-              success: function (data) {
-                  if (data.response_code === 0) {
-                      game.questions[diff] = data.results;
-                  } else {
-                      alert('Issue with question retrieval. Response code: ' + data.response_code);
-                  }
-              },
-              error: function () {
-                  console.warn('error input');
+    this.retrieveQuestions = function (diff) {
+      $.ajax({
+          method: 'GET',
+          dataType: 'JSON',
+          data: {
+              'amount': 50,
+              difficulty: diff,
+              type: 'multiple',
+              token: game.token
+          },
+          url: 'https://opentdb.com/api.php',
+          success: function (data) {
+              if (data.response_code === 0) {
+                  game.questions[diff] = data.results;
+              } else {
+                  alert('Issue with question retrieval. Response code: ' + data.response_code);
               }
-          });
-      };
-      this.buildQuestionShoe = function () {
-          var difficulty = ['easy', 'medium', 'hard'];
+          },
+          error: function () {
+              console.warn('error input');
+          }
+      });
+    };
+    this.buildQuestionShoe = function () {
+      var difficulty = ['easy', 'medium', 'hard'];
 
-          difficulty.forEach((element) => {
-              this.retrieveQuestions(element);
-          });
+      difficulty.forEach((element) => {
+          this.retrieveQuestions(element);
+      });
 
-      };
+    };
 
 
     this.getCharacterInfo = function (character) {
@@ -584,37 +605,26 @@ function Controller(){
         });
     };
 
-      this.selectAnswer = function (element) {
-          var specialty = false;
+  this.selectAnswer = function (element) {
+      var specialty = false;
 
-          if (element.answer === 'correct') {
-              if (element.category === game.players[game.turn].character.category) {
-                  specialty = true;
-              }
-              this.dealDamage(this.dmgCalculator(element.difficulty, specialty));
+      if (element.answer === 'correct') {
+          if (element.category === game.players[game.turn].character.category) {
+              specialty = true;
           }
-
-          game.view.renderQuestion(game.questionBank);
-      };
-
-      this.newGame = function(){ // resets the necessary model properties and dom values to default, deleted players so there won't be any duplicate player objects.
-        this.buildQuestionShoe();
-        this.turn = 1;
-        this.roundTime = 60;
-        this.roundTimer = null;
-        delete game.players[1];
-        delete game.players[2];
-        game.avatarClickable=true;
-        game.bothPlayersSelected=false;
-        $('.chuckNorrisQuote p').empty();
-        $('.hitPoints').css('width','100%');
-        $('.emptyMe').removeClass('characterName');
-        $('.playerAvatar').removeClass('playerAvatarClicked');
+          this.dealDamage(this.dmgCalculator(element.difficulty, specialty));
       }
 
-      this.domParser = function (input) {
-          var doc = new DOMParser().parseFromString(input, "text/html");
-          return doc.documentElement.textContent;
-      }
+      game.view.renderQuestion(game.questionBank);
+  };
+
+  // this.newGame = function(){ // resets the necessary model properties and dom values to default, deleted players so there won't be any duplicate player objects.
+  //   this.buildQuestionShoe();
+  // }
+
+  this.domParser = function (input) {
+      var doc = new DOMParser().parseFromString(input, "text/html");
+      return doc.documentElement.textContent;
+  }
 
 }
