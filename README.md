@@ -9,7 +9,7 @@ A two player Marvel vs DC fighting game with a core trivia mechanic. A project t
 - WEB APIs
     - [superhero API](http://www.superheroapi.com/)
     - [trivia API](https://opentdb.com)
-    - [chuck norrise API](https://api.chucknorris.io/)
+    - [chuck norris jokes API](https://api.chucknorris.io/)
 
 
 ### Team
