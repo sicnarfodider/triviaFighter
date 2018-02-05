@@ -14,10 +14,10 @@ A Fighting Game with a core trivia mechanic. A project to exercise the use of WE
 
 ### Team
 
-- [Brian Evans] (https://github.com/sloumdrone)
-- [Francis Redido ] (https://github.com/sicnarfodider/)
-- [Lori Mitchell] (https://github.com/lmitchell524)
-- [Sangwoo Kim] (https://github.com/sangwoo89118)
+- [Brian Evans](https://github.com/sloumdrone)
+- [Francis Redido ](https://github.com/sicnarfodider/)
+- [Lori Mitchell](https://github.com/lmitchell524)
+- [Sangwoo Kim](https://github.com/sangwoo89118)
 
 ### Acknowledgements
 - **Hero/Villian Images** https://jsenior.deviantart.com/
