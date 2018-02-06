@@ -14,7 +14,6 @@ function initialize(){
 
 
 function addClickHandlers(){
-    $(window).on('orientationchange',checkOrientation);
     $('.playerAvatar').click(function(){
         if (game.avatarClickable){
             if (game.turn === 1){
@@ -50,14 +49,6 @@ function addClickHandlers(){
     });
 }
 
-function checkOrientation(){
-    var orientationType = screen.orientation.type || screen.mozOrientation.type || screen.msOrientation.type;
-    if( orientationType === 'portrait-primary' || window.innerWidth == 700 ){
-        $('.warning').removeClass('hide');
-    }else{
-        $('.warning').addClass('hide');
-    }
-}
 
 function GameModel(){
     this.view = new View();
