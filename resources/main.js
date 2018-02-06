@@ -88,7 +88,6 @@ function GameModel(){
         this.winnerQuote = true;
         $('.chuckNorrisQuote p').empty();
         $('.hitPoints').css('width','100%');
-        $('.emptyMe').removeClass('characterName');
         $('.playerAvatar').removeClass('playerAvatarClicked');
         game.controller.getSessionToken();
     }
@@ -525,6 +524,9 @@ function Controller(){
 
 
     this.getCharacterInfo = function (character) {
+        var loadingTimeout = setTimeout(function(){
+            $('.loading-error').css('display','block');
+        }, 10000);
         $.ajax({
             method: 'post',
             url: 'http://danielpaschal.com/lfzproxy.php',
@@ -542,6 +544,7 @@ function Controller(){
                   $('.modalContainer').show( 1 );
                   $('.loadScreen').hide( 1 );
                 }
+                clearTimeout(loadingTimeout);
             },
             error: function () {
                 console.warn('something went wrong');
