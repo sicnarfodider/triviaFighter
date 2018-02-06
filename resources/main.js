@@ -529,11 +529,10 @@ function Controller(){
         }, 10000);
         $.ajax({
             method: 'post',
-            url: 'http://danielpaschal.com/lfzproxy.php',
+            url: '',
             dataType: 'json',
             data: {
-              url: 'http://superheroapi.com/api/10159579732380612/'+ game.availableCharacters[character].heroID,
-              color: 'lavender'
+
             },
             success: function (data) {
                 game.apiResponse++;
