@@ -3,6 +3,7 @@ $(document).ready(initialize);
 var game;
 function initialize(){
     game = new GameModel();
+    checkOrientation();
     game.controller.getSessionToken();
     addClickHandlers();
     game.view.handleAvatarHover();
@@ -13,6 +14,7 @@ function initialize(){
 
 
 function addClickHandlers(){
+    $(window).on('orientationchange',checkOrientation);
     $('.playerAvatar').click(function(){
         if (game.avatarClickable){
             if (game.turn === 1){
@@ -48,6 +50,14 @@ function addClickHandlers(){
     });
 }
 
+function checkOrientation(){
+    var orientationType = screen.orientation.type || screen.mozOrientation.type || screen.msOrientation.type;
+    if( orientationType === 'portrait-primary'){
+        $('.warning').removeClass('hide');
+    }else{
+        $('.warning').addClass('hide');
+    }
+}
 
 function GameModel(){
     this.view = new View();
