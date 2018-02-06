@@ -8,7 +8,7 @@ function initialize(){
     game.view.handleAvatarHover();
     game.controller.buildCharacterInfo();
     $('.gameBoard').css('background-image','url("./resources/images/backgrounds/' + game.gameBoardBackgrounds[Math.floor(Math.random()*game.gameBoardBackgrounds.length)] + '")');
-    // console.log('Round timer: ' + game.roundTimer,'round time: ' + game.roundTime, 'HTML timer text:' + $('.timer').text());
+    console.log('Round timer: ' + game.roundTimer,'round time: ' + game.roundTime, 'HTML timer text:' + $('.timer').text());
 }
 
 
@@ -33,7 +33,7 @@ function addClickHandlers(){
     });
 
     $('.playAgain').click(function(){
-        game.endGame();
+        game.controller.newGame();
         $('.loadScreen').hide();
         $('.modalContainer').fadeIn(2000);
     });
@@ -52,6 +52,7 @@ function addClickHandlers(){
 function GameModel(){
     this.view = new View();
     this.controller = new Controller();
+    // this.gameState = this.states.gameStart; //playerSelection, trivia, ready, endgame
     this.token = null;
     this.avatarClickable = true;
     this.playButtonClickable = false;
@@ -66,32 +67,7 @@ function GameModel(){
         //1 : Player {}
         //2 : Player {}
         //built using the add
-    }
-    this.winnerQuote = true;
-
-    this.endGame = function(){
-        this.token = null;
-        this.avatarClickable = true;
-        this.playButtonClickable = false;
-        this.bothPlayersSelected = false;
-        this.turn = 1;
-        this.roundTime = 60; //just a starting number, tracks amount of time left in round;
-        // // this.questionsLeft = 10; //tracks the number of questions asked
-        this.roundTimer = null;
-        this.apiResponse = 0;
-        this.questions = {};
-        this.players = {
-            //1 : Player {}
-            //2 : Player {}
-            //built using the add
-        }
-        this.winnerQuote = true;
-        $('.chuckNorrisQuote p').empty();
-        $('.hitPoints').css('width','100%');
-        $('.emptyMe').removeClass('characterName');
-        $('.playerAvatar').removeClass('playerAvatarClicked');
-        game.controller.getSessionToken();
-    }
+    };
 
     this.availableCharacters = {
         'deadpool' : {
@@ -234,10 +210,7 @@ function View(){
             winnerSex = game.players[2]['character']['characterInfo']['appearance']['gender'];
         }
 
-        if(game.winnerQuote){
-            game.controller.getQuote(winner, winnerImg, winnerSex);
-        }
-
+        game.controller.getQuote(winner, winnerImg, winnerSex);
 
         $('.gameBoard').fadeOut(1500);
         $('.winnerModal').fadeIn(1500);
@@ -264,7 +237,6 @@ function View(){
         var ansList = entry.incorrect_answers; //array of incorrect answers
         var correctAns = entry.correct_answer;
         var randomNum = Math.floor(Math.random()*4);
-
         ansList.splice(randomNum,0, correctAns);
         // game.questionsLeft--;
         var catSpan = $('<span>',{
@@ -322,8 +294,6 @@ function View(){
               $('#p2name').text(game.players[2].character.name);
               $('.gameBoard').show();
               $('.readyBanner').show('slow');
-
-              // add function that triggers game start/load screen
             }
         });
         this.renderHeroInArena(game.players);
@@ -487,41 +457,42 @@ function Controller(){
               game.turn -= 1;
           }
           $('.readyBanner').slideDown('slow');
+          this.questionBank(game.questions)
       }
 
   };
 
-    this.retrieveQuestions = function (diff) {
-      $.ajax({
-          method: 'GET',
-          dataType: 'JSON',
-          data: {
-              'amount': 50,
-              difficulty: diff,
-              type: 'multiple',
-              token: game.token
-          },
-          url: 'https://opentdb.com/api.php',
-          success: function (data) {
-              if (data.response_code === 0) {
-                  game.questions[diff] = data.results;
-              } else {
-                  alert('Issue with question retrieval. Response code: ' + data.response_code);
+      this.retrieveQuestions = function (diff) {
+          $.ajax({
+              method: 'GET',
+              dataType: 'JSON',
+              data: {
+                  'amount': 50,
+                  difficulty: diff,
+                  type: 'multiple',
+                  token: game.token
+              },
+              url: 'https://opentdb.com/api.php',
+              success: function (data) {
+                  if (data.response_code === 0) {
+                      game.questions[diff] = data.results;
+                  } else {
+                      alert('Issue with question retrieval. Response code: ' + data.response_code);
+                  }
+              },
+              error: function () {
+                  console.warn('error input');
               }
-          },
-          error: function () {
-              console.warn('error input');
-          }
-      });
-    };
-    this.buildQuestionShoe = function () {
-      var difficulty = ['easy', 'medium', 'hard'];
+          });
+      };
+      this.buildQuestionShoe = function () {
+          var difficulty = ['easy', 'medium', 'hard'];
 
-      difficulty.forEach((element) => {
-          this.retrieveQuestions(element);
-      });
+          difficulty.forEach((element) => {
+              this.retrieveQuestions(element);
+          });
 
-    };
+      };
 
 
     this.getCharacterInfo = function (character) {
@@ -535,6 +506,7 @@ function Controller(){
             },
             success: function (data) {
                 game.apiResponse++;
+                console.log(game.apiResponse);
                 $('.loadingBar').css('width', game.apiResponse * 7.5 + 17.5 + '%');
                 game.availableCharacters[character].characterInfo = data;
 
@@ -560,7 +532,7 @@ function Controller(){
         var categories = ["dev","movie","food","celebrity","science","political","sport","animal","music","history","travel","career","money","fashion"];
         var randomNum = Math.floor(Math.random() * categories.length);
         var randomCategory = categories[randomNum];
-        game.winnerQuote = false;
+
 
 
         $.ajax({
@@ -569,22 +541,29 @@ function Controller(){
             dataType: 'json',
             data: {'category': randomCategory},
             success: function (quote) {
+                var regEx = new RegExp('chuck norris', 'ig');  //find the word 'chuck norris' in a quote no matter if it's uppercase or lowercase
                 var chuckNorrisQuote = quote.value;
-                var regEx = /(chuck norris)|\bchuck|\bnorris/ig  //find the word 'chuck norris' in a quote no matter if it's uppercase or lowercase
-                var winnerQuote = chuckNorrisQuote.replace(regEx, winner); //change the word 'chuck norris' with winner's name
+
+                var regEx1 = new RegExp('chuck norris', 'ig');  //find the word 'chuck norris' in a quote no matter if it's uppercase or lowercase
+                var winnerQuote = chuckNorrisQuote.replace(regEx1, winner); //change the word 'chuck norris' with winner's name
+
+                var regEx2 = new RegExp('chuck', 'ig');
+                winnerQuote = winnerQuote.replace(regEx2, winner);  //change the word 'chuck' with winner's name
+
+                var regEx3 = new RegExp('norris', 'ig');
+                winnerQuote = winnerQuote.replace(regEx3, winner);  //change the word 'norris' with winner's name
 
                 if(winnerSex === 'Female'){  //if the sex of the winner is female, change the words 'his' and 'he' to 'her' and 'she'
-                    var regExHe = /\bhe/ig;
-                    winnerQuote = winnerQuote.replace(regExHe, 'she');
+                    var regEx4 = new RegExp('he', 'ig');
+                    winnerQuote = winnerQuote.replace(regEx4, 'she');
 
-                    var regExHis = /\bhis/ig;
-                    winnerQuote = winnerQuote.replace(regExHis, 'her');
+                    var regEx5 = new RegExp('his', 'ig');
+                    winnerQuote = winnerQuote.replace(regEx5, 'hers');
 
-                    var regExHim = /\bhim/ig
-                    winnerQuote = winnerQuote.replace(regExHim, 'her');
+                    var regEx6 = new RegExp('him', 'ig');
+                    winnerQuote = winnerQuote.replace(regEx6, 'her');
 
                 }
-
 
                 // find all winner's name and color it to lime green;
                 var findTheName = winner;
@@ -603,26 +582,37 @@ function Controller(){
         });
     };
 
-  this.selectAnswer = function (element) {
-      var specialty = false;
+      this.selectAnswer = function (element) {
+          var specialty = false;
 
-      if (element.answer === 'correct') {
-          if (element.category === game.players[game.turn].character.category) {
-              specialty = true;
+          if (element.answer === 'correct') {
+              if (element.category === game.players[game.turn].character.category) {
+                  specialty = true;
+              }
+              this.dealDamage(this.dmgCalculator(element.difficulty, specialty));
           }
-          this.dealDamage(this.dmgCalculator(element.difficulty, specialty));
+
+          game.view.renderQuestion(game.questionBank);
+      };
+
+      this.newGame = function(){ // resets the necessary model properties and dom values to default, deleted players so there won't be any duplicate player objects.
+        this.buildQuestionShoe();
+        this.turn = 1;
+        this.roundTime = 60;
+        this.roundTimer = null;
+        delete game.players[1];
+        delete game.players[2];
+        game.avatarClickable=true;
+        game.bothPlayersSelected=false;
+        $('.chuckNorrisQuote p').empty();
+        $('.hitPoints').css('width','100%');
+        $('.emptyMe').removeClass('characterName');
+        $('.playerAvatar').removeClass('playerAvatarClicked');
       }
 
-      game.view.renderQuestion(game.questionBank);
-  };
-
-  // this.newGame = function(){ // resets the necessary model properties and dom values to default, deleted players so there won't be any duplicate player objects.
-  //   this.buildQuestionShoe();
-  // }
-
-  this.domParser = function (input) {
-      var doc = new DOMParser().parseFromString(input, "text/html");
-      return doc.documentElement.textContent;
-  }
+      this.domParser = function (input) {
+          var doc = new DOMParser().parseFromString(input, "text/html");
+          return doc.documentElement.textContent;
+      }
 
 }
