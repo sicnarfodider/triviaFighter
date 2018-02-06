@@ -8,7 +8,7 @@ function initialize(){
     game.view.handleAvatarHover();
     game.controller.buildCharacterInfo();
     $('.gameBoard').css('background-image','url("./resources/images/backgrounds/' + game.gameBoardBackgrounds[Math.floor(Math.random()*game.gameBoardBackgrounds.length)] + '")');
-    console.log('Round timer: ' + game.roundTimer,'round time: ' + game.roundTime, 'HTML timer text:' + $('.timer').text());
+    // console.log('Round timer: ' + game.roundTimer,'round time: ' + game.roundTime, 'HTML timer text:' + $('.timer').text());
 }
 
 
@@ -67,6 +67,8 @@ function GameModel(){
         //2 : Player {}
         //built using the add
     }
+    this.winnerQuote = true;
+
     this.endGame = function(){
         this.token = null;
         this.avatarClickable = true;
@@ -83,6 +85,7 @@ function GameModel(){
             //2 : Player {}
             //built using the add
         }
+        this.winnerQuote = true;
         $('.chuckNorrisQuote p').empty();
         $('.hitPoints').css('width','100%');
         $('.emptyMe').removeClass('characterName');
@@ -231,7 +234,10 @@ function View(){
             winnerSex = game.players[2]['character']['characterInfo']['appearance']['gender'];
         }
 
-        game.controller.getQuote(winner, winnerImg, winnerSex);
+        if(game.winnerQuote){
+            game.controller.getQuote(winner, winnerImg, winnerSex);
+        }
+
 
         $('.gameBoard').fadeOut(1500);
         $('.winnerModal').fadeIn(1500);
@@ -529,7 +535,6 @@ function Controller(){
             },
             success: function (data) {
                 game.apiResponse++;
-                console.log(game.apiResponse);
                 $('.loadingBar').css('width', game.apiResponse * 7.5 + 17.5 + '%');
                 game.availableCharacters[character].characterInfo = data;
 
@@ -555,7 +560,7 @@ function Controller(){
         var categories = ["dev","movie","food","celebrity","science","political","sport","animal","music","history","travel","career","money","fashion"];
         var randomNum = Math.floor(Math.random() * categories.length);
         var randomCategory = categories[randomNum];
-
+        game.winnerQuote = false;
 
 
         $.ajax({
@@ -564,29 +569,22 @@ function Controller(){
             dataType: 'json',
             data: {'category': randomCategory},
             success: function (quote) {
-                var regEx = new RegExp('chuck norris', 'ig');  //find the word 'chuck norris' in a quote no matter if it's uppercase or lowercase
                 var chuckNorrisQuote = quote.value;
-
-                var regEx1 = new RegExp('chuck norris', 'ig');  //find the word 'chuck norris' in a quote no matter if it's uppercase or lowercase
-                var winnerQuote = chuckNorrisQuote.replace(regEx1, winner); //change the word 'chuck norris' with winner's name
-
-                var regEx2 = new RegExp('chuck', 'ig');
-                winnerQuote = winnerQuote.replace(regEx2, winner);  //change the word 'chuck' with winner's name
-
-                var regEx3 = new RegExp('norris', 'ig');
-                winnerQuote = winnerQuote.replace(regEx3, winner);  //change the word 'norris' with winner's name
+                var regEx = /(chuck norris)|\bchuck|\bnorris/ig  //find the word 'chuck norris' in a quote no matter if it's uppercase or lowercase
+                var winnerQuote = chuckNorrisQuote.replace(regEx, winner); //change the word 'chuck norris' with winner's name
 
                 if(winnerSex === 'Female'){  //if the sex of the winner is female, change the words 'his' and 'he' to 'her' and 'she'
-                    var regEx4 = new RegExp('he', 'ig');
-                    winnerQuote = winnerQuote.replace(regEx4, 'she');
+                    var regExHe = /\bhe/ig;
+                    winnerQuote = winnerQuote.replace(regExHe, 'she');
 
-                    var regEx5 = new RegExp('his', 'ig');
-                    winnerQuote = winnerQuote.replace(regEx5, 'hers');
+                    var regExHis = /\bhis/ig;
+                    winnerQuote = winnerQuote.replace(regExHis, 'her');
 
-                    var regEx6 = new RegExp('him', 'ig');
-                    winnerQuote = winnerQuote.replace(regEx6, 'her');
+                    var regExHim = /\bhim/ig
+                    winnerQuote = winnerQuote.replace(regExHim, 'her');
 
                 }
+
 
                 // find all winner's name and color it to lime green;
                 var findTheName = winner;
