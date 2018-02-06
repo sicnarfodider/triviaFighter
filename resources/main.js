@@ -525,6 +525,9 @@ function Controller(){
 
 
     this.getCharacterInfo = function (character) {
+        var loadingTimeout = setTimeout(function(){
+            $('.loading-error').css('display','block');
+        }, 10000);
         $.ajax({
             method: 'post',
             url: 'http://danielpaschal.com/lfzproxy.php',
@@ -542,6 +545,7 @@ function Controller(){
                   $('.modalContainer').show( 1 );
                   $('.loadScreen').hide( 1 );
                 }
+                clearTimeout(loadingTimeout);
             },
             error: function () {
                 console.warn('something went wrong');

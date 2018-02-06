@@ -674,12 +674,23 @@ h1 {
 }
 
 .loadingBar {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   height: 100%;
   width: 10%;
   background-color: red;
+}
+
+.loading-error{
+    font-family: fighting;
+    color: #c5c523;
+    text-shadow: 1px 1px black,
+                -1px -1px black,
+                -1px 1px black,
+                1px -1px black;
+    letter-spacing: 4px;
+    display: none;
 }
 /************MISC********************/
 .hide{
