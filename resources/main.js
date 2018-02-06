@@ -264,6 +264,7 @@ function View(){
         var ansList = entry.incorrect_answers; //array of incorrect answers
         var correctAns = entry.correct_answer;
         var randomNum = Math.floor(Math.random()*4);
+
         ansList.splice(randomNum,0, correctAns);
         // game.questionsLeft--;
         var catSpan = $('<span>',{
@@ -486,7 +487,6 @@ function Controller(){
               game.turn -= 1;
           }
           $('.readyBanner').slideDown('slow');
-          this.questionBank(game.questions)
       }
 
   };
