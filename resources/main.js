@@ -88,7 +88,6 @@ function GameModel(){
         this.winnerQuote = true;
         $('.chuckNorrisQuote p').empty();
         $('.hitPoints').css('width','100%');
-        $('.emptyMe').removeClass('characterName');
         $('.playerAvatar').removeClass('playerAvatarClicked');
         game.controller.getSessionToken();
     }
