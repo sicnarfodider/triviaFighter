@@ -3,7 +3,6 @@ $(document).ready(initialize);
 var game;
 function initialize(){
     game = new GameModel();
-    checkOrientation();
     game.controller.getSessionToken();
     addClickHandlers();
     game.view.handleAvatarHover();
