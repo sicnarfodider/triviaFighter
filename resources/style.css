@@ -386,7 +386,7 @@ h1 {
 }
 
 .currentPlayerTurn {
-    text-shadow: 2px 2px 15px yellow;
+    animation: readyPulse 2s infinite;
 }
 
 .currentTime {
