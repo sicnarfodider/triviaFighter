@@ -740,7 +740,7 @@ h1 {
         display: block;
     }
 
-    .modalContainer div, .gameBoard, .winnerModal, .loadScreen, .readyBanner{
+    .modalContainer div, .gameBoard, .winnerModal, .readyBanner{
         display: none;
     }
 }
