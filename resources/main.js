@@ -8,7 +8,6 @@ function initialize(){
     game.view.handleAvatarHover();
     game.controller.buildCharacterInfo();
     $('.gameBoard').css('background-image','url("./resources/images/backgrounds/' + game.gameBoardBackgrounds[Math.floor(Math.random()*game.gameBoardBackgrounds.length)] + '")');
-    // console.log('Round timer: ' + game.roundTimer,'round time: ' + game.roundTime, 'HTML timer text:' + $('.timer').text());
 }
 
 
@@ -63,7 +62,6 @@ function GameModel(){
     this.bothPlayersSelected = false;
     this.turn = 1;
     this.roundTime = 60; //just a starting number, tracks amount of time left in round;
-    // // this.questionsLeft = 10; //tracks the number of questions asked
     this.roundTimer = null;
     this.apiResponse = 0;
     this.questions = {};
@@ -81,8 +79,7 @@ function GameModel(){
         this.playButtonClickable = false;
         this.bothPlayersSelected = false;
         this.turn = 1;
-        this.roundTime = 60; //just a starting number, tracks amount of time left in round;
-        // // this.questionsLeft = 10; //tracks the number of questions asked
+        this.roundTime = 60;
         this.roundTimer = null;
         this.apiResponse = 0;
         this.questions = {};
@@ -228,12 +225,10 @@ function View(){
         var winnerImg;
 
         if (game.players['1']['hitPoints'] > 0) {
-            // winner = game.players['1']['name'];
             winner = game.players['1']['character']['name'];
             winnerImg = game.players['1']['character']['img']
             winnerSex = game.players[1]['character']['characterInfo']['appearance']['gender'];
         } else {
-            // winner = game.players['2']['name'];
             winner = game.players['2']['character']['name'];
             winnerImg = game.players['2']['character']['img']
             winnerSex = game.players[2]['character']['characterInfo']['appearance']['gender'];
@@ -391,7 +386,7 @@ function View(){
                 }
                 $('.readyBanner').show();
                 }
-            }, 1000);
+        }, 1000);
     }
 
     this.playerTurn = function (){
@@ -416,7 +411,6 @@ function Controller(){
     this.questionBank = function(questionsObj){
         var qBank = [];
         for(key in questionsObj){
-            // for(var main_i = 0;main_i<questionsArrMain.length;main_i++){
                 var maxQ = 3;
                 if(key==='easy'){
                     maxQ=4
@@ -466,13 +460,13 @@ function Controller(){
       }
       switch (difficulty){
           case 'easy':
-              damagePercent+=10;
+              damagePercent+=5;
               break;
           case 'medium':
-              damagePercent+=15;
+              damagePercent+=10;
               break;
           case 'hard':
-              damagePercent+=20;
+              damagePercent+=15;
               break;
       }
       return damagePercent
@@ -572,7 +566,7 @@ function Controller(){
                 clearTimeout(loadingTimeout);
             },
             error: function () {
-                console.warn('something went wrong');
+                console.warn('Connection issue retrieving of superhero data');
             }
         });
 
@@ -613,14 +607,10 @@ function Controller(){
 
                 }
 
-
                 // find all winner's name and color it to lime green;
                 var findTheName = winner;
                 var replaceAllName = new RegExp(findTheName, 'g');
-                var greenTxt = winnerQuote.replace(replaceAllName, winner.fontcolor('limegreen'));
-
-                // var greenTxt = winnerQuote.replace(winner, winner.fontcolor('limegreen'));//makes font tag to change color of the name
-
+                var greenTxt = winnerQuote.replace(replaceAllName, winner.fontcolor('limegreen'));//makes font tag to change color of the name
 
                 $('.chuckNorrisQuote p').append(greenTxt);
                 $('.winningCharacter').css('background-image', 'url("resources/images/characters/' + winnerImg + '")');
@@ -669,16 +659,11 @@ function Controller(){
     if(game.turn === 1){
         game.damageBank -= amount
         $('.dmg-meter-left').text(game.damageBank);
-        $('.showDmg-left').text('-'+amount);
-        $('.showDmg-left').fadeIn();
-        $('.showDmg-left').fadeOut("slow");
-
+        $('.showDmg-left').text('-'+amount).fadeIn().fadeOut("slow");
     }else{
         game.damageBank -= amount
         $('.dmg-meter-right').text(game.damageBank);
-        $('.showDmg-right').text('-'+amount);
-        $('.showDmg-right').fadeIn();
-        $('.showDmg-right').fadeOut("slow");
+        $('.showDmg-right').text('-'+amount).fadeIn().fadeOut("slow");
     }
   }
 
@@ -688,10 +673,6 @@ function Controller(){
     $('.dmg-meter-right').text('');
     $('.dmg-meter-left').text('');
   }
-
-  // this.newGame = function(){ // resets the necessary model properties and dom values to default, deleted players so there won't be any duplicate player objects.
-  //   this.buildQuestionShoe();
-  // }
 
   this.domParser = function (input) {
       var doc = new DOMParser().parseFromString(input, "text/html");
