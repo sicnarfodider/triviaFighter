@@ -23,7 +23,6 @@ body {
 
 .playerOnHoverLeft, .playerOnHoverRight {
   width: 30vw;
-  height: 100vh;
 }
 
 .modalContainer, .warning {
