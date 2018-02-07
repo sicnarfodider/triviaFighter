@@ -47,6 +47,10 @@ function addClickHandlers(){
         $('.readyBanner').fadeOut();
         $('.questionModal').addClass('questionModalShow');
     });
+
+    $('.dmgBtn').on('click', function(){
+        game.controller.dealDamage(game.damageBank);
+    })
 }
 
 
@@ -69,6 +73,7 @@ function GameModel(){
         //built using the add
     }
     this.winnerQuote = true;
+    this.damageBank = null;
 
     this.endGame = function(){
         this.token = null;
@@ -247,6 +252,7 @@ function View(){
     this.renderQuestion = function(qArray){ //renders Question and answers into Arena
         $('.answer').remove();
         if(game.questionBank.length===0){
+            game.controller.lastDamage();
             $('.questionModal').removeClass('questionModalShow');
             clearInterval(game.roundTimer);
             //wincheckstate & player change
@@ -264,7 +270,7 @@ function View(){
         var ansList = entry.incorrect_answers; //array of incorrect answers
         var correctAns = entry.correct_answer;
         var randomNum = Math.floor(Math.random()*4);
-
+        console.log(correctAns);
         ansList.splice(randomNum,0, correctAns);
         // game.questionsLeft--;
         var catSpan = $('<span>',{
@@ -372,9 +378,11 @@ function View(){
             game.roundTime--;
             $('.currentTime').text(game.roundTime);
             if(game.roundTime===0){
+                game.controller.lastDamage();
                 $('.questionModal').removeClass('questionModalShow');
                 clearInterval(game.roundTimer);
                 if(game.turn===1){
+
                     game.turn=2;
                     $('.readyButton span').text('P2');
                 }else{
@@ -432,14 +440,17 @@ function Controller(){
 
 
   this.dealDamage = function(amount){
+    game.damageBank = null;
     game.turn === 1
     ? game.players[game.turn + 1]['hitPoints'] -= amount
     : game.players[game.turn - 1]['hitPoints'] -= amount;
     var hpTarget= null;
     if(game.turn===1){
-        hpTarget = game.players[2]['hitPoints']
+        hpTarget = game.players[2]['hitPoints'];
+        $('.dmg-meter-left').text('');
     }else{
         hpTarget = game.players[1]['hitPoints']
+        $('.dmg-meter-right').text('');
     }
     game.view.renderDmg(hpTarget);
     if(game.questionBank===0 || game.players['1']['hitPoints']<=0 ||  game.players['2']['hitPoints']<=0){
@@ -627,11 +638,56 @@ function Controller(){
           if (element.category === game.players[game.turn].character.category) {
               specialty = true;
           }
-          this.dealDamage(this.dmgCalculator(element.difficulty, specialty));
+          this.addDamage(this.dmgCalculator(element.difficulty, specialty));
+      }else if(element.answer !== 'correct'){
+         this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
       }
 
       game.view.renderQuestion(game.questionBank);
   };
+
+  this.addDamage = function(amount){
+    if(game.turn === 1){
+
+        game.damageBank += amount
+        $('.dmg-meter-left').text(game.damageBank);
+        $('.showDmg-left').text('+'+amount);
+        $('.showDmg-left').fadeIn();
+        $('.showDmg-left').fadeOut("slow");
+
+    }else{
+        game.damageBank += amount
+        $('.dmg-meter-right').text(game.damageBank);
+        $('.showDmg-right').text('+'+amount);
+        $('.showDmg-right').fadeIn();
+        $('.showDmg-right').fadeOut("slow");
+    }
+  }
+
+  this.reduceDamage = function(amount){
+    if(game.damageBank < 0 || game.damageBank < amount) return;
+    if(game.turn === 1){
+        game.damageBank -= amount
+        $('.dmg-meter-left').text(game.damageBank);
+        $('.showDmg-left').text('-'+amount);
+        $('.showDmg-left').fadeIn();
+        $('.showDmg-left').fadeOut("slow");
+
+    }else{
+        game.damageBank -= amount
+        $('.dmg-meter-right').text(game.damageBank);
+        $('.showDmg-right').text('-'+amount);
+        $('.showDmg-right').fadeIn();
+        $('.showDmg-right').fadeOut("slow");
+    }
+  }
+
+  this.lastDamage = function(){
+    this.dealDamage(game.damageBank);
+    game.damageBank = null;
+    $('.dmg-meter-right').text('');
+    $('.dmg-meter-left').text('');
+  }
 
   // this.newGame = function(){ // resets the necessary model properties and dom values to default, deleted players so there won't be any duplicate player objects.
   //   this.buildQuestionShoe();
