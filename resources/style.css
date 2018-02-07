@@ -744,3 +744,19 @@ h1 {
         display: none;
     }
 }
+
+@media screen
+    and (max-width: 768px)
+    and (max-height: 420px){
+
+    .playerContainer {
+        height: 65vh;
+        width: 20vw;
+        top: 5vh
+    }
+
+    .gameTitle {
+        width: 60%;
+    }
+
+}
