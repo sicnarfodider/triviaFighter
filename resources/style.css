@@ -421,9 +421,6 @@ h1 {
     text-align: right;
 }
 
-.showDmg-right, .rightDmgBtn{
-  transform: translate(50%, 0%) scaleX(-1)
-}
 
 .showDmg-left, .showDmg-right{
     font-family: ss4;
@@ -435,6 +432,12 @@ h1 {
     bottom: 15%;
     text-align: right;
 }
+
+.showDmg-right, .rightDmg{
+  transform: rotateY(180deg);
+  text-align: left;
+}
+
 .dmg .dmg-meter-left, .dmg .dmg-meter-right{
     font-family: ss4;
     font-size: 7vmin;
