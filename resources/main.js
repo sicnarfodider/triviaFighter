@@ -43,6 +43,7 @@ function addClickHandlers(){
         game.controller.questionBank(game.questions);
         game.roundTime=60;
         game.view.renderTimer();
+        game.view.playerTurn();
         $('.readyBanner').fadeOut();
         $('.questionModal').addClass('questionModalShow');
     });
@@ -323,8 +324,8 @@ function View(){
 
 
               $('.modalContainer').hide();
-              $('#p1name').text(game.players[1].character.name);
-              $('#p2name').text(game.players[2].character.name);
+              $('.p1name').text(game.players[1].character.name);
+              $('.p2name').text(game.players[2].character.name);
               $('.gameBoard').show();
               $('.readyBanner').show('slow');
 
@@ -383,14 +384,28 @@ function View(){
                 if(game.turn===1){
 
                     game.turn=2;
-                    $('.readyButton span').text('P2')
+                    $('.readyButton span').text('P2');
                 }else{
                     game.turn=1;
-                    $('.readyButton span').text('P1')
+                    $('.readyButton span').text('P1');
                 }
                 $('.readyBanner').show();
                 }
             }, 1000);
+    }
+
+    this.playerTurn = function (){
+        if(game.turn === 1){
+            $('.player2').removeClass('playerTurn');
+            $('.player1').addClass('playerTurn');
+            $('.p2name').removeClass('currentPlayerTurn');
+            $('.p1name').addClass('currentPlayerTurn');
+        } else {
+            $('.player1').removeClass('playerTurn');
+            $('.player2').addClass('playerTurn');
+            $('.p1name').removeClass('currentPlayerTurn');
+            $('.p2name').addClass('currentPlayerTurn');
+        }
     }
 
 }

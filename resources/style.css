@@ -361,7 +361,7 @@ h1 {
     text-align: center;
 }
 
-#p1name {
+.p1name {
   display: inline-block;
     color: whitesmoke;
     position: absolute;
@@ -373,7 +373,7 @@ h1 {
     letter-spacing: 3px;
 }
 
-#p2name {
+.p2name {
   display: inline-block;
     color: whitesmoke;
     position: absolute;
@@ -385,6 +385,10 @@ h1 {
     letter-spacing: 3px;
 }
 
+.currentPlayerTurn {
+    animation: readyPulse 2s infinite;
+}
+
 .currentTime {
   position: absolute;
   top: 50%;
@@ -394,10 +398,10 @@ h1 {
 }
 
 .player1, .player2 {
-    height: 85vh;
+    height: 80vh;
     width: 25vw;
     position: absolute;
-    top: 58%;
+    top: 55%;
     background-image: none;
     background-repeat: no-repeat;
     background-size: contain;
@@ -412,6 +416,10 @@ h1 {
 .player2 {
     left: 87vw;
     transform: translate(-50%, -50%) scaleX(-1);
+}
+
+.playerTurn {
+    height: 90vh;
 }
 
 .dmg{
