@@ -397,7 +397,7 @@ h1 {
 }
 
 .player1, .player2 {
-    height: 80vh;
+    height: 90vh;
     width: 25vw;
     position: absolute;
     top: 55%;
@@ -417,17 +417,12 @@ h1 {
     transform: translate(-50%, -50%) scaleX(-1);
 }
 
-.playerTurn {
-    height: 90vh;
-}
-
 .dmg{
     width: 100%;
     position: absolute;
     bottom: 0;
     text-align: right;
 }
-
 
 .showDmg-left, .showDmg-right{
     font-family: ss4;
@@ -753,6 +748,22 @@ h1 {
 
     .gameTitle {
         width: 60%;
+    }
+
+    .hitPointsContainerLeft, .hitPointsContainerRight{
+        border: 2px solid yellow;
+    }
+
+    .questionContainer {
+        font-size: 3vmin;
+    }
+
+    .questionModal {
+        border: 2px solid silver;
+    }
+
+    .answer {
+        font-size: 3vmin;
     }
 
 }

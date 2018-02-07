@@ -392,15 +392,15 @@ function View(){
 
     this.playerTurn = function (){
         if(game.turn === 1){
-            $('.player2').removeClass('playerTurn');
-            $('.player1').addClass('playerTurn');
             $('.p2name').removeClass('currentPlayerTurn');
             $('.p1name').addClass('currentPlayerTurn');
+            $('.player1 .dmgBtn').addClass('ready');
+            $('.player2 .dmgBtn').removeClass('ready');
         } else {
-            $('.player1').removeClass('playerTurn');
-            $('.player2').addClass('playerTurn');
             $('.p1name').removeClass('currentPlayerTurn');
             $('.p2name').addClass('currentPlayerTurn');
+            $('.player2 .dmgBtn').addClass('ready');
+            $('.player1 .dmgBtn').removeClass('ready');
         }
     }
 
