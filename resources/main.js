@@ -8,7 +8,6 @@ function initialize(){
     game.view.handleAvatarHover();
     game.controller.buildCharacterInfo();
     $('.gameBoard').css('background-image','url("./resources/images/backgrounds/' + game.gameBoardBackgrounds[Math.floor(Math.random()*game.gameBoardBackgrounds.length)] + '")');
-    // console.log('Round timer: ' + game.roundTimer,'round time: ' + game.roundTime, 'HTML timer text:' + $('.timer').text());
 }
 
 
@@ -36,6 +35,7 @@ function addClickHandlers(){
         game.endGame();
         $('.loadScreen').hide();
         $('.modalContainer').fadeIn(2000);
+        $('.winnerModal').hide();
     });
 
     $('.readyButton').on('click',function(){
@@ -43,9 +43,14 @@ function addClickHandlers(){
         game.controller.questionBank(game.questions);
         game.roundTime=60;
         game.view.renderTimer();
+        game.view.playerTurn();
         $('.readyBanner').fadeOut();
         $('.questionModal').addClass('questionModalShow');
     });
+
+    $('.dmgBtn').on('click', function(){
+        game.controller.dealDamage(game.damageBank);
+    })
 }
 
 
@@ -58,7 +63,6 @@ function GameModel(){
     this.bothPlayersSelected = false;
     this.turn = 1;
     this.roundTime = 60; //just a starting number, tracks amount of time left in round;
-    // // this.questionsLeft = 10; //tracks the number of questions asked
     this.roundTimer = null;
     this.apiResponse = 0;
     this.questions = {};
@@ -68,6 +72,7 @@ function GameModel(){
         //built using the add
     }
     this.winnerQuote = true;
+    this.damageBank = null;
 
     this.endGame = function(){
         this.token = null;
@@ -75,8 +80,7 @@ function GameModel(){
         this.playButtonClickable = false;
         this.bothPlayersSelected = false;
         this.turn = 1;
-        this.roundTime = 60; //just a starting number, tracks amount of time left in round;
-        // // this.questionsLeft = 10; //tracks the number of questions asked
+        this.roundTime = 60;
         this.roundTimer = null;
         this.apiResponse = 0;
         this.questions = {};
@@ -222,12 +226,10 @@ function View(){
         var winnerImg;
 
         if (game.players['1']['hitPoints'] > 0) {
-            // winner = game.players['1']['name'];
             winner = game.players['1']['character']['name'];
             winnerImg = game.players['1']['character']['img']
             winnerSex = game.players[1]['character']['characterInfo']['appearance']['gender'];
         } else {
-            // winner = game.players['2']['name'];
             winner = game.players['2']['character']['name'];
             winnerImg = game.players['2']['character']['img']
             winnerSex = game.players[2]['character']['characterInfo']['appearance']['gender'];
@@ -246,6 +248,7 @@ function View(){
     this.renderQuestion = function(qArray){ //renders Question and answers into Arena
         $('.answer').remove();
         if(game.questionBank.length===0){
+            game.controller.lastDamage();
             $('.questionModal').removeClass('questionModalShow');
             clearInterval(game.roundTimer);
             //wincheckstate & player change
@@ -263,7 +266,7 @@ function View(){
         var ansList = entry.incorrect_answers; //array of incorrect answers
         var correctAns = entry.correct_answer;
         var randomNum = Math.floor(Math.random()*4);
-
+        console.log(correctAns);
         ansList.splice(randomNum,0, correctAns);
         // game.questionsLeft--;
         var catSpan = $('<span>',{
@@ -317,8 +320,8 @@ function View(){
 
 
               $('.modalContainer').hide();
-              $('#p1name').text(game.players[1].character.name);
-              $('#p2name').text(game.players[2].character.name);
+              $('.p1name').text(game.players[1].character.name);
+              $('.p2name').text(game.players[2].character.name);
               $('.gameBoard').show();
               $('.readyBanner').show('slow');
 
@@ -371,18 +374,34 @@ function View(){
             game.roundTime--;
             $('.currentTime').text(game.roundTime);
             if(game.roundTime===0){
+                game.controller.lastDamage();
                 $('.questionModal').removeClass('questionModalShow');
                 clearInterval(game.roundTimer);
                 if(game.turn===1){
+
                     game.turn=2;
-                    $('.readyButton span').text('P2')
+                    $('.readyButton span').text('P2');
                 }else{
                     game.turn=1;
-                    $('.readyButton span').text('P1')
+                    $('.readyButton span').text('P1');
                 }
                 $('.readyBanner').show();
                 }
-            }, 1000);
+        }, 1000);
+    }
+
+    this.playerTurn = function (){
+        if(game.turn === 1){
+            $('.player2').removeClass('playerTurn');
+            $('.player1').addClass('playerTurn');
+            $('.p2name').removeClass('currentPlayerTurn');
+            $('.p1name').addClass('currentPlayerTurn');
+        } else {
+            $('.player1').removeClass('playerTurn');
+            $('.player2').addClass('playerTurn');
+            $('.p1name').removeClass('currentPlayerTurn');
+            $('.p2name').addClass('currentPlayerTurn');
+        }
     }
 
 }
@@ -393,7 +412,6 @@ function Controller(){
     this.questionBank = function(questionsObj){
         var qBank = [];
         for(key in questionsObj){
-            // for(var main_i = 0;main_i<questionsArrMain.length;main_i++){
                 var maxQ = 3;
                 if(key==='easy'){
                     maxQ=4
@@ -417,14 +435,17 @@ function Controller(){
 
 
   this.dealDamage = function(amount){
+    game.damageBank = null;
     game.turn === 1
     ? game.players[game.turn + 1]['hitPoints'] -= amount
     : game.players[game.turn - 1]['hitPoints'] -= amount;
     var hpTarget= null;
     if(game.turn===1){
-        hpTarget = game.players[2]['hitPoints']
+        hpTarget = game.players[2]['hitPoints'];
+        $('.dmg-meter-left').text('');
     }else{
         hpTarget = game.players[1]['hitPoints']
+        $('.dmg-meter-right').text('');
     }
     game.view.renderDmg(hpTarget);
     if(game.questionBank===0 || game.players['1']['hitPoints']<=0 ||  game.players['2']['hitPoints']<=0){
@@ -440,13 +461,13 @@ function Controller(){
       }
       switch (difficulty){
           case 'easy':
-              damagePercent+=10;
+              damagePercent+=5;
               break;
           case 'medium':
-              damagePercent+=15;
+              damagePercent+=10;
               break;
           case 'hard':
-              damagePercent+=20;
+              damagePercent+=15;
               break;
       }
       return damagePercent
@@ -546,7 +567,7 @@ function Controller(){
                 clearTimeout(loadingTimeout);
             },
             error: function () {
-                console.warn('something went wrong');
+                console.warn('Connection issue retrieving of superhero data');
             }
         });
 
@@ -587,14 +608,10 @@ function Controller(){
 
                 }
 
-
                 // find all winner's name and color it to lime green;
                 var findTheName = winner;
                 var replaceAllName = new RegExp(findTheName, 'g');
-                var greenTxt = winnerQuote.replace(replaceAllName, winner.fontcolor('limegreen'));
-
-                // var greenTxt = winnerQuote.replace(winner, winner.fontcolor('limegreen'));//makes font tag to change color of the name
-
+                var greenTxt = winnerQuote.replace(replaceAllName, winner.fontcolor('limegreen'));//makes font tag to change color of the name
 
                 $('.chuckNorrisQuote p').append(greenTxt);
                 $('.winningCharacter').css('background-image', 'url("resources/images/characters/' + winnerImg + '")');
@@ -612,15 +629,51 @@ function Controller(){
           if (element.category === game.players[game.turn].character.category) {
               specialty = true;
           }
-          this.dealDamage(this.dmgCalculator(element.difficulty, specialty));
+          this.addDamage(this.dmgCalculator(element.difficulty, specialty));
+      }else if(element.answer !== 'correct'){
+         this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
       }
 
       game.view.renderQuestion(game.questionBank);
   };
 
-  // this.newGame = function(){ // resets the necessary model properties and dom values to default, deleted players so there won't be any duplicate player objects.
-  //   this.buildQuestionShoe();
-  // }
+  this.addDamage = function(amount){
+    if(game.turn === 1){
+
+        game.damageBank += amount
+        $('.dmg-meter-left').text(game.damageBank);
+        $('.showDmg-left').text('+'+amount);
+        $('.showDmg-left').fadeIn();
+        $('.showDmg-left').fadeOut("slow");
+
+    }else{
+        game.damageBank += amount
+        $('.dmg-meter-right').text(game.damageBank);
+        $('.showDmg-right').text('+'+amount);
+        $('.showDmg-right').fadeIn();
+        $('.showDmg-right').fadeOut("slow");
+    }
+  }
+
+  this.reduceDamage = function(amount){
+    if(game.damageBank < 0 || game.damageBank < amount) return;
+    if(game.turn === 1){
+        game.damageBank -= amount
+        $('.dmg-meter-left').text(game.damageBank);
+        $('.showDmg-left').text('-'+amount).fadeIn().fadeOut("slow");
+    }else{
+        game.damageBank -= amount
+        $('.dmg-meter-right').text(game.damageBank);
+        $('.showDmg-right').text('-'+amount).fadeIn().fadeOut("slow");
+    }
+  }
+
+  this.lastDamage = function(){
+    this.dealDamage(game.damageBank);
+    game.damageBank = null;
+    $('.dmg-meter-right').text('');
+    $('.dmg-meter-left').text('');
+  }
 
   this.domParser = function (input) {
       var doc = new DOMParser().parseFromString(input, "text/html");

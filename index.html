@@ -80,13 +80,15 @@
             <div class="hitPointsContainerRight">
                 <div class="hitPoints right"></div>
             </div>
-            <span id="p1name"></span>
-            <span id="p2name"></span>
+            <span class="p1name"></span>
+            <span class="p2name"></span>
         </header>
         <div class="player1">
+            <span class='showDmg-left'></span>
             <div class="dmg">
-                <button>Deal Damage</button>
-                <span class="dmg-meter"></span>
+
+                <button class='dmgBtn'>Deal Damage</button>
+                <span class="dmg-meter-left"></span>
             </div>
         </div>
         <div class="questionModal">
@@ -94,7 +96,13 @@
                 <p></p>
             </div>
         </div>
-        <div class="player2"></div>
+        <div class="player2">
+            <span class='showDmg-right'></span>
+            <div class="dmg rightDmg">
+                <span class="dmg-meter-right"></span>
+                <button class='dmgBtn rightDmgBtn'>Deal Damage</button>
+            </div>
+        </div>
     </main>
     <section class="winnerModal">
         <div class="modal">

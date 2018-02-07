@@ -23,7 +23,6 @@ body {
 
 .playerOnHoverLeft, .playerOnHoverRight {
   width: 30vw;
-  height: 100vh;
 }
 
 .modalContainer, .warning {
@@ -361,7 +360,7 @@ h1 {
     text-align: center;
 }
 
-#p1name {
+.p1name {
   display: inline-block;
     color: whitesmoke;
     position: absolute;
@@ -373,7 +372,7 @@ h1 {
     letter-spacing: 3px;
 }
 
-#p2name {
+.p2name {
   display: inline-block;
     color: whitesmoke;
     position: absolute;
@@ -385,6 +384,10 @@ h1 {
     letter-spacing: 3px;
 }
 
+.currentPlayerTurn {
+    animation: readyPulse 2s infinite;
+}
+
 .currentTime {
   position: absolute;
   top: 50%;
@@ -394,10 +397,10 @@ h1 {
 }
 
 .player1, .player2 {
-    height: 85vh;
+    height: 80vh;
     width: 25vw;
     position: absolute;
-    top: 58%;
+    top: 55%;
     background-image: none;
     background-repeat: no-repeat;
     background-size: contain;
@@ -414,6 +417,10 @@ h1 {
     transform: translate(-50%, -50%) scaleX(-1);
 }
 
+.playerTurn {
+    height: 90vh;
+}
+
 .dmg{
     width: 100%;
     position: absolute;
@@ -421,7 +428,24 @@ h1 {
     text-align: right;
 }
 
-.dmg-meter{
+
+.showDmg-left, .showDmg-right{
+    font-family: ss4;
+    font-size: 8vmin;
+    color: yellow;
+    text-shadow: 1px 1px black, -1px -1px black, -1px 1px black, 1px -1px black;
+        width: 100%;
+    position: absolute;
+    bottom: 15%;
+    text-align: right;
+}
+
+.showDmg-right, .rightDmg{
+  transform: rotateY(180deg);
+  text-align: left;
+}
+
+.dmg .dmg-meter-left, .dmg .dmg-meter-right{
     font-family: ss4;
     font-size: 7vmin;
     color: yellow;
@@ -714,5 +738,9 @@ h1 {
 
     .warning{
         display: block;
+    }
+
+    .modalContainer div, .gameBoard, .winnerModal, .loadScreen, .readyBanner{
+        display: none;
     }
 }
