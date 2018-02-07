@@ -535,7 +535,6 @@ function Controller(){
                 url: 'http://superheroapi.com/api.php/10159579732380612/'+ game.availableCharacters[character].heroID
             },
             success: function (data) {
-                console.log('data', data);
                 game.apiResponse++;
                 $('.loadingBar').css('width', game.apiResponse * 7.5 + 17.5 + '%');
                 game.availableCharacters[character].characterInfo = data;
