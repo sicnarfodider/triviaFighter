@@ -35,6 +35,7 @@ function addClickHandlers(){
         game.endGame();
         $('.loadScreen').hide();
         $('.modalContainer').fadeIn(2000);
+        $('.winnerModal').hide();
     });
 
     $('.readyButton').on('click',function(){
