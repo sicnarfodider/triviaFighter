@@ -740,4 +740,8 @@ h1 {
     .warning{
         display: block;
     }
+
+    .modalContainer div, .gameBoard, .winnerModal, .loadScreen, .readyBanner{
+        display: none;
+    }
 }
