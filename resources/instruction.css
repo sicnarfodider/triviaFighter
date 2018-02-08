@@ -41,11 +41,11 @@ a{
 }
 
 
-.instruction-content div h1{
+.instruction-content>div h1{
     font-size: 10vmin;
-    padding-left: 10%;
     border-bottom: 3px solid;
 }
+
 
 .instruction-content div{
     margin: auto;
@@ -89,8 +89,29 @@ a{
 
 figure{
     text-align: center;
+    margin: 20px 0;
 }
+
 .ins-img{
     width: 500px;
     border-radius: 10px;
 }
+
+/***************************** media query ***********************************/
+
+@media screen
+    and (max-height: 768px)
+    and (max-width: 420px){
+
+    .instruction-content div ol{
+        padding: 0;
+    }
+
+    .ins-img{
+        width: 90%;
+        max-width: 300px;
+    }
+}
+
+
+/***************************** end of media query ****************************/
