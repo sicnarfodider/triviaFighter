@@ -448,6 +448,7 @@ h1 {
 }
 
 .dmg button{
+    outline: none;
     cursor: pointer;
     border: none;
     background-color: transparent;
