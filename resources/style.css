@@ -17,6 +17,11 @@ body {
     overflow: hidden;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 /*****************  player selection modal ******************/
 
 
@@ -39,6 +44,22 @@ body {
     display: none;
 }
 
+.instruction{
+    position: absolute;
+    display: inline-block;
+    top: 2%;
+    right: 3%;
+    font-size: 3vmin;
+    font-family: fighting;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: #c7f62d;
+    text-shadow: 1px 1px black,
+                -1px -1px black,
+                -1px 1px black,
+                1px -1px black;
+}
+
 .playerContainer {
     height: 72vh;
     width: 30vw;
@@ -48,6 +69,7 @@ body {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+    pointer-events: none;
 }
 
 .warning{
@@ -173,12 +195,14 @@ body {
   transform: translateX(-50%);
   font-family: ss4;
   text-align: center;
+  pointer-events: none;
 }
 
 h1 {
   margin: 0;
   padding: 0;
 }
+
 
 .row:last-child {
   position: absolute;
@@ -297,7 +321,6 @@ h1 {
     background-image: url('images/avatars/thing.png');
 }
 
-
 /************************** gameboard ****************************/
 
 
@@ -397,7 +420,7 @@ h1 {
 }
 
 .player1, .player2 {
-    height: 80vh;
+    height: 90vh;
     width: 25vw;
     position: absolute;
     top: 55%;
@@ -417,17 +440,12 @@ h1 {
     transform: translate(-50%, -50%) scaleX(-1);
 }
 
-.playerTurn {
-    height: 90vh;
-}
-
 .dmg{
     width: 100%;
     position: absolute;
     bottom: 0;
     text-align: right;
 }
-
 
 .showDmg-left, .showDmg-right{
     font-family: ss4;
@@ -453,6 +471,7 @@ h1 {
 }
 
 .dmg button{
+    outline: none;
     cursor: pointer;
     border: none;
     background-color: transparent;
@@ -757,6 +776,22 @@ h1 {
 
     .gameTitle {
         width: 60%;
+    }
+
+    .hitPointsContainerLeft, .hitPointsContainerRight{
+        border: 2px solid yellow;
+    }
+
+    .questionContainer {
+        font-size: 3vmin;
+    }
+
+    .questionModal {
+        border: 2px solid silver;
+    }
+
+    .answer {
+        font-size: 3vmin;
     }
 
 }
