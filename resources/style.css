@@ -17,6 +17,11 @@ body {
     overflow: hidden;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 /*****************  player selection modal ******************/
 
 
@@ -39,6 +44,22 @@ body {
     display: none;
 }
 
+.instruction{
+    position: absolute;
+    display: inline-block;
+    top: 2%;
+    right: 3%;
+    font-size: 3vmin;
+    font-family: fighting;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: #c7f62d;
+    text-shadow: 1px 1px black,
+                -1px -1px black,
+                -1px 1px black,
+                1px -1px black;
+}
+
 .playerContainer {
     height: 72vh;
     width: 30vw;
@@ -48,6 +69,7 @@ body {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+    pointer-events: none;
 }
 
 .warning{
@@ -173,12 +195,14 @@ body {
   transform: translateX(-50%);
   font-family: ss4;
   text-align: center;
+  pointer-events: none;
 }
 
 h1 {
   margin: 0;
   padding: 0;
 }
+
 
 .row:last-child {
   position: absolute;
@@ -296,7 +320,6 @@ h1 {
 #thething {
     background-image: url('images/avatars/thing.png');
 }
-
 
 /************************** gameboard ****************************/
 

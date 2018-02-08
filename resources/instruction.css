@@ -1,0 +1,117 @@
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+@font-face {
+    font-family: ss4;
+    src: url(Font/SSF4.ttf)
+}
+@font-face {
+    font-family: fighting;
+    src: url(Font/Fighting.TTF)
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background-image: url('images/backgrounds/particleBG.gif');
+    background-position: center;
+    background-size: cover;
+    background-color: #475eff;
+}
+
+li {
+    list-style-type:  none;
+    position: relative;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.instruction-content{
+    position: relative;
+    font-family: fighting;
+    width: 100vw;
+    color: #ffdd00;
+    text-shadow: 1px 1px black, -1px -1px black, -1px 1px black, 1px -1px black;
+}
+
+
+.instruction-content>div h1{
+    font-size: 10vmin;
+    border-bottom: 3px solid;
+}
+
+
+.instruction-content div{
+    margin: auto;
+    text-align: center;
+    width: 70%;
+    padding-bottom: 4%;
+}
+
+.instruction-content div ol{
+    counter-reset: li;
+    text-align: left;
+    font-family: arial;
+    font-weight: bold;
+    color: #c5c523;
+    font-size: 3vmin;
+    padding-left: 5%;
+    word-spacing: 5px;
+    letter-spacing: 2px;
+}
+
+.instruction-content div ol li::before{
+    display: inline-block;
+    position: absolute;
+    counter-increment: li;
+    content: counter(li)".";
+    left: -35px;
+    color: #c5c523;
+    text-shadow: 1px 1px black, -1px -1px black, -1px 1px black, 1px -1px black;
+}
+
+.instruction-content div a{
+    margin-top: 3%;
+    font-size: 5vmin;
+}
+
+.instruction-content div a::before{
+    content: "";
+    display: block;
+    border-top: 3px solid;
+}
+
+figure{
+    text-align: center;
+    margin: 20px 0;
+}
+
+.ins-img{
+    width: 500px;
+    border-radius: 10px;
+}
+
+/***************************** media query ***********************************/
+
+@media screen
+    and (max-height: 768px)
+    and (max-width: 420px){
+
+    .instruction-content div ol{
+        padding: 0;
+    }
+
+    .ins-img{
+        width: 90%;
+        max-width: 300px;
+    }
+}
+
+
+/***************************** end of media query ****************************/
