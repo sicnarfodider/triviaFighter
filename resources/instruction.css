@@ -19,7 +19,7 @@ body{
     background-image: url('images/backgrounds/particleBG.gif');
     background-position: center;
     background-size: cover;
-    background-color: #475eff;
+    background-color: #6c6c6c;
 }
 
 li {
@@ -36,15 +36,15 @@ a{
     position: relative;
     font-family: fighting;
     width: 100vw;
-    color: #ffdd00;
-    text-shadow: 1px 1px black, -1px -1px black, -1px 1px black, 1px -1px black;
+    color: #ffde01;
+    text-shadow: 1px 1px #00000075, -1px -1px #00000075, -1px 1px #00000075, 1px -1px #00000075;
 }
 
 
 .instruction-content>div h1{
     font-size: 4.5em;
     margin-top: 3%;
-    border-bottom: 3px solid;
+    border-bottom: 3px solid #ffffffcc;
 }
 
 
@@ -58,13 +58,13 @@ a{
 .instruction-content div ol{
     counter-reset: li;
     text-align: left;
-    font-family: arial;
+    font-family: 'Ubuntu', sans-serif;
     font-weight: bold;
-    color: #c5c523;
+    color: #ffdf01;
     font-size: 3vmin;
     padding-left: 5%;
     word-spacing: 5px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .instruction-content div ol li::before{
@@ -73,8 +73,8 @@ a{
     counter-increment: li;
     content: counter(li)".";
     left: -35px;
-    color: #c5c523;
-    text-shadow: 1px 1px black, -1px -1px black, -1px 1px black, 1px -1px black;
+    color: #ffdf01;
+    text-shadow: 1px 1px #00000075, -1px -1px #00000075, -1px 1px #00000075, 1px -1px #00000075;
 }
 
 .back{
@@ -85,7 +85,7 @@ a{
 .bottom::before{
     content: "";
     display: block;
-    border-top: 3px solid;
+    border-top: 3px solid #ffffffcc;
     margin-bottom: 2%;
 }
 
