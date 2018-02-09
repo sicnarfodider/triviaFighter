@@ -94,6 +94,8 @@ function GameModel(){
         $('.hitPoints').css('width','100%');
         $('.playerAvatar').removeClass('playerAvatarClicked');
         game.controller.getSessionToken();
+        $('.row:last-child').removeClass('readyPlayButton');
+
     }
 
     this.availableCharacters = {
@@ -312,6 +314,7 @@ function View(){
     this.activePlayButton = function(){
 
         game.playButtonClickable = true;
+        $('.row:last-child').addClass('readyPlayButton');
         $('.playButton').click(function(){
             if(game.playButtonClickable) {
               game.playButtonClickable = false;
