@@ -50,7 +50,19 @@ function addClickHandlers(){
 
     $('.dmgBtn').on('click', function(){
         game.controller.dealDamage(game.damageBank);
-    })
+    });
+
+    $('.instruction').on('click', function(){
+        $('.instruction-content').show();
+        $('.modalContainer').hide();
+        $('body').css('overflow-y', 'visible');
+    });
+
+    $('.back').on('click', function(){
+        $('.modalContainer').show();
+        $('.instruction-content').hide();
+        $('body').css('overflow-y', 'hidden');
+    });
 }
 
 
@@ -547,6 +559,7 @@ function Controller(){
 
 
     this.getCharacterInfo = function (character) {
+        console.log('get character function called');
         var loadingTimeout = setTimeout(function(){
             $('.loading-error').css('display','block');
         }, 10000);

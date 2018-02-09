@@ -765,10 +765,13 @@ h1 {
     display: none;
 }
 /************MISC********************/
-.hide{
+.hide {
     display: none;
 }
 
+.show {
+    display: block;
+}
 /************MISC********************/
 
 @media screen and (orientation: portrait) {
