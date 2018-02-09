@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="warning">
-        <h1>This game is designed to be played on landscape orientation</h1>
+        <h1>This game is not designed to be played on these screen dimensions</h1>
     </div>
     <section class="modalContainer">
         <a class="instruction">instructions</a>
@@ -89,14 +89,14 @@
             <span class='showDmg-left'></span>
             <div class="dmg">
                 <div>
-                    <button class='dmgBtn rightDmgBtn'>Finish Combo</button>
+                    <button player="p1" class='dmgBtn'>Finish Combo</button>
                     <div class="combo">
                         <div multiplier=2 class="combo-box p1"></div>
                         <div multiplier=3 class="combo-box p1"></div>
                         <div multiplier=4 class="combo-box p1"></div>
                     </div>
                 </div>
-                <span class="dmg-meter-left">0</span>
+                <span class="dmg-meter-left"></span>
             </div>
         </div>
         <div class="questionModal">
@@ -107,9 +107,9 @@
         <div class="player2">
             <span class='showDmg-right'></span>
             <div class="dmg rightDmg">
-                <span class="dmg-meter-right">0</span>
+                <span class="dmg-meter-right"></span>
                 <div>
-                    <button class='dmgBtn rightDmgBtn'>Finish Combo</button>
+                    <button player="p2" class='dmgBtn'>Finish Combo</button>
                     <div class="combo">
                         <div multiplier=4 class="combo-box p2"></div>
                         <div multiplier=3 class="combo-box p2"></div>

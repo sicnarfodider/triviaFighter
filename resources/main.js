@@ -43,6 +43,7 @@ function addClickHandlers(){
         game.dmgMultiplier = 0;
         game.controller.questionBank(game.questions);
         game.roundTime=60;
+        game.view.renderComboButton()
         game.view.renderTimer();
         game.view.playerTurn();
         game.view.renderMultiplier();
@@ -53,6 +54,7 @@ function addClickHandlers(){
     $('.dmgBtn').on('click', function(){
         game.dmgMultiplier = 0;
         game.controller.dealDamage(game.damageBank);
+        game.view.renderComboButton()
         game.view.renderMultiplier();
     });
     $('.instruction').on('click', function(){
@@ -336,6 +338,7 @@ function View(){
               game.playButtonClickable = false;
               game.avatarClickable = false;
               game.turn = 1;
+              game.view.renderComboButton()
 
 
               $('.modalContainer').hide();
@@ -391,6 +394,7 @@ function View(){
     this.renderTimer = function(){   // renders the timer for each player
         game.roundTimer  = setInterval(function() {
             game.roundTime--;
+            game.roundTime <= 10 ? $('.timer').addClass('lastTen') : $('.timer').removeClass('lastTen')
             $('.currentTime').text(game.roundTime);
             if(game.roundTime===0){
                 clearInterval(game.roundTimer);
@@ -398,8 +402,8 @@ function View(){
                 game.view.renderMultiplier();
                 $('.questionModal').removeClass('questionModalShow');
                     game.damageBank = null;
-                    $('.dmg-meter-right').text('');
-                    $('.dmg-meter-left').text('');
+                    $('.dmg-meter-right').text('0');
+                    $('.dmg-meter-left').text('0');
                 if(game.turn===1){
                     game.turn=2;
                     $('.readyButton span').text('P2');
@@ -425,6 +429,21 @@ function View(){
             $('.player1 .dmgBtn').removeClass('ready');
         }
     }
+
+    this.renderComboButton = function(){
+        var p1 = $('.dmgBtn[player="p1"]');
+        var p2 = $('.dmgBtn[player="p2"]');
+        if(game.damageBank>0){
+            if(game.turn === 1){
+                p1.css('display','inline-block')
+            }else{
+                p2.css('display','inline-block')
+            }
+        }else{
+            $('.dmgBtn').css('display','none');
+        }
+    }
+
     this.renderMultiplier = function(){
         if(game.dmgMultiplier>0){
             if(game.turn === 1){
@@ -476,10 +495,10 @@ function Controller(){
     var hpTarget= null;
     if(game.turn===1){
         hpTarget = game.players[2]['hitPoints'];
-        $('.dmg-meter-left').text('');
+        $('.dmg-meter-left').text('0');
     }else{
         hpTarget = game.players[1]['hitPoints']
-        $('.dmg-meter-right').text('');
+        $('.dmg-meter-right').text('0');
     }
     game.view.renderDmg(hpTarget);
     if(game.questionBank===0 || game.players['1']['hitPoints']<=0 ||  game.players['2']['hitPoints']<=0){
@@ -672,7 +691,7 @@ function Controller(){
       }else if(element.answer !== 'correct'){
         this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
       }
-
+      game.view.renderComboButton()
       game.view.renderQuestion(game.questionBank);
   };
 

@@ -88,7 +88,7 @@ a {
                 1px -1px black;
     letter-spacing: 4px;
     width: 90%;
-    margin: 40% auto;
+    margin: 40vmin auto;
 }
 
 .infoTextContainer {
@@ -401,6 +401,11 @@ h1 {
     text-shadow: 3px 3px #fafafa, -3px -3px #f8f3f3, -3px 3px white, 3px -3px #f6f6f6;
 }
 
+.lastTen {
+    animation: pulse 2s infinite;
+    color: red;
+}
+
 .p1name {
   display: inline-block;
     color: whitesmoke;
@@ -501,8 +506,6 @@ h1 {
     filter: hue-rotate(90deg);
     background-image: url(images/backgrounds/lightning.gif);
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
 }
 
 .showDmg-left, .showDmg-right{
@@ -545,7 +548,7 @@ h1 {
 
 .questionModal {
     width: 45vw;
-    height: 35vw;
+    height: 60vh;
     border: 4px solid silver;
     position: absolute;
     top: 57%;
@@ -584,6 +587,7 @@ h1 {
     font-size: 2vmin;
     width: 45%;
     height: 20%;
+    max-height: 9vmin;
     border: 1px solid whitesmoke;
     display: inline-block;
     box-sizing: border-box;
@@ -860,3 +864,32 @@ h1 {
     }
 
 }
+
+@media screen
+    and (max-width: 1000px)
+    and (max-height: 350px){
+
+    .questionContainer{
+        font-size: 3.5vmin;
+    }
+
+    .answer{
+        font-size: 3vmin;
+    }
+}
+
+@media screen and (max-height:320px){
+    .warning{
+        display: block;
+    }
+}
+
+/*********************** keyframes **********************/
+@keyframes pulse {
+    0% { font-size: : 12vmin ; }
+    40% { font-size: : 16vmin; }
+    50% { font-size: : 12vmin ; }
+    70% { font-size: : 16vmin; }
+    100% { font-size: : 12vmin ; }
+}
+/*********************** keyframes end **********************/
