@@ -73,6 +73,7 @@ function GameModel(){
     }
     this.winnerQuote = true;
     this.damageBank = null;
+    this.dmgMultiplier = 1;
 
     this.endGame = function(){
         this.token = null;
@@ -454,7 +455,7 @@ function Controller(){
 
   };
 
-  this.dmgCalculator = function(difficulty, boolean, multiplier){
+  this.dmgCalculator = function(difficulty, boolean){
       var damagePercent = 0;
       if(boolean){
           damagePercent+=7;
@@ -470,7 +471,7 @@ function Controller(){
               damagePercent+=12;
               break;
       }
-      return damagePercent*multiplier
+      return damagePercent*game.dmgMultiplier
   };
 
   this.getSessionToken = function(){  //avoids receiving same question w/in 6 hour period
@@ -629,7 +630,7 @@ function Controller(){
         if (element.category === game.players[game.turn].character.category) {
             specialty = true;
         }
-        this.addDamage(this.dmgCalculator(element.difficulty, specialty, game.dmgMultiplier));
+        this.addDamage(this.dmgCalculator(element.difficulty, specialty));
       }else if(element.answer !== 'correct'){
         game.dmgMultiplier = 1;
         this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
