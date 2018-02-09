@@ -377,7 +377,6 @@ function View(){
             game.roundTime--;
             $('.currentTime').text(game.roundTime);
             if(game.roundTime===0){
-                game.controller.lastDamage();
                 $('.questionModal').removeClass('questionModalShow');
                 clearInterval(game.roundTimer);
                 if(game.turn===1){
