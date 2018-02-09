@@ -157,11 +157,13 @@ a {
 }
 
 .playerSelectionContainer {
-    height: 100vh;
-    width: 40vw;
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
     vertical-align: top;
     position: absolute;
+    height: 100vh;
+    width: 40vw;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -170,11 +172,17 @@ a {
 }
 
 .row {
-    width: 46.5vmin;
-    height: 15vmin;
     text-align: center;
     position: relative;
+    max-width: 31vmax;
+    max-height: 10vmax;
+    width: 46.5vmin;
+    height: 15vmin;
     margin: 0.75vmin auto;
+}
+
+.row:nth-child(4){
+    margin-bottom: 30px;
 }
 
 .infoRow {
@@ -227,6 +235,8 @@ h1 {
     border: 3px solid black;
     border-radius: 5%;
     display: inline-block;
+    max-width: 10vmax;
+    max-height: 10vmax;
     width: 15vmin;
     height: 15vmin;
     cursor: pointer;
@@ -379,8 +389,8 @@ h1 {
     background-color: transparent;
     color: blue;
     font-size: 12vmin;
-    text-shadow: 0 0 30px white;
     text-align: center;
+    text-shadow: 3px 3px #fafafa, -3px -3px #f8f3f3, -3px 3px white, 3px -3px #f6f6f6;
 }
 
 .p1name {
@@ -792,6 +802,10 @@ h1 {
 
     .answer {
         font-size: 3vmin;
+    }
+
+    .timer{
+        text-shadow: 1.5px 1.5px #fafafa, -1.5px -1.5px #f8f3f3, -1.5px 1.5px white, 1.5px -1.5px #f6f6f6;
     }
 
 }
