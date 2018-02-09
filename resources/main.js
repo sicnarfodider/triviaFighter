@@ -55,6 +55,17 @@ function addClickHandlers(){
         game.controller.dealDamage(game.damageBank);
         game.view.renderMultiplier();
     });
+    $('.instruction').on('click', function(){
+        $('.instruction-content').show();
+        $('.modalContainer').hide();
+        $('body').css('overflow-y', 'visible');
+    });
+
+    $('.back').on('click', function(){
+        $('.modalContainer').show();
+        $('.instruction-content').hide();
+        $('body').css('overflow-y', 'hidden');
+    });
 }
 
 
@@ -382,8 +393,13 @@ function View(){
             game.roundTime--;
             $('.currentTime').text(game.roundTime);
             if(game.roundTime===0){
-                $('.questionModal').removeClass('questionModalShow');
                 clearInterval(game.roundTimer);
+                game.dmgMultiplier = 0;
+                game.view.renderMultiplier();
+                $('.questionModal').removeClass('questionModalShow');
+                    game.damageBank = null;
+                    $('.dmg-meter-right').text('');
+                    $('.dmg-meter-left').text('');
                 if(game.turn===1){
                     game.turn=2;
                     $('.readyButton span').text('P2');

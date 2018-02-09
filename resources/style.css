@@ -485,19 +485,24 @@ h1 {
     display: inline-block;
     background-color: #e2e6e8;
     border: 2px solid darkblue;
-    -webkit-transform: skew(-20deg);
-    -moz-transform: skew(-20deg);
-    -o-transform: skew(-20deg);
+    -webkit-transform: skew(22deg);
+    -moz-transform: skew(22deg);
+    -o-transform: skew(22deg);
 }
 
 .combo-box.p2{
-    -webkit-transform: skew(20deg);
-    -moz-transform: skew(20deg);
-    -o-transform: skew(20deg);
+    -webkit-transform: skew(-22deg);
+    -moz-transform: skew(-22deg);
+    -o-transform: skew(-22deg);
 }
 
 .combo-box.on{
-    background-color: red;
+    background-color: #c900ff;
+    filter: hue-rotate(90deg);
+    background-image: url(images/backgrounds/lightning.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .showDmg-left, .showDmg-right{
@@ -800,10 +805,13 @@ h1 {
     display: none;
 }
 /************MISC********************/
-.hide{
+.hide {
     display: none;
 }
 
+.show {
+    display: block;
+}
 /************MISC********************/
 
 @media screen and (orientation: portrait) {

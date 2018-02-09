@@ -80,6 +80,11 @@ a{
 .back{
     margin-top: 3%;
     font-size: 2em;
+    cursor: pointer;
+}
+
+.instruction-content .backBtn {
+    width: auto;
 }
 
 .bottom::before{
