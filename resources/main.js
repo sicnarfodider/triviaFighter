@@ -390,6 +390,9 @@ function View(){
             $('.currentTime').text(game.roundTime);
             if(game.roundTime===0){
                 $('.questionModal').removeClass('questionModalShow');
+                    game.damageBank = null;
+                    $('.dmg-meter-right').text('');
+                    $('.dmg-meter-left').text('');
                 clearInterval(game.roundTimer);
                 if(game.turn===1){
 
