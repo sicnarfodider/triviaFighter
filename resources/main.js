@@ -40,7 +40,7 @@ function addClickHandlers(){
 
     $('.readyButton').on('click',function(){
         clearInterval(game.roundTimer);
-        game.dmgMultiplier = 1;
+        game.dmgMultiplier = 0;
         game.controller.questionBank(game.questions);
         game.roundTime=60;
         game.view.renderTimer();
@@ -51,7 +51,7 @@ function addClickHandlers(){
     });
 
     $('.dmgBtn').on('click', function(){
-        game.dmgMultiplier = 1;
+        game.dmgMultiplier = 0;
         game.controller.dealDamage(game.damageBank);
         game.view.renderMultiplier();
     });
@@ -385,7 +385,6 @@ function View(){
                 $('.questionModal').removeClass('questionModalShow');
                 clearInterval(game.roundTimer);
                 if(game.turn===1){
-
                     game.turn=2;
                     $('.readyButton span').text('P2');
                 }else{
@@ -411,11 +410,11 @@ function View(){
         }
     }
     this.renderMultiplier = function(){
-        if(game.dmgMultiplier>1){
+        if(game.dmgMultiplier>0){
             if(game.turn === 1){
-                $('.p1.combo-box:nth-child('+game.dmgMultiplier+')').addClass('on');
+                $(".p1.combo-box[multiplier="+game.dmgMultiplier+"]").addClass('on');
             }else{
-                $('.p2.combo-box:nth-child('+game.dmgMultiplier+')').addClass('on');
+                $(".p2.combo-box[multiplier="+game.dmgMultiplier+"]").addClass('on');
             }
         }else{
             $('.combo-box').removeClass('on');
@@ -648,15 +647,13 @@ function Controller(){
   this.selectAnswer = function (element) {
       var specialty = false;
       if (element.answer === 'correct') {
-        game.dmgMultiplier < 3 ? game.dmgMultiplier += 1 : game.dmgMultiplier = 3;
+        game.dmgMultiplier < 4 ? game.dmgMultiplier += 1 : game.dmgMultiplier = 4;
         game.view.renderMultiplier();
         if (element.category === game.players[game.turn].character.category) {
             specialty = true;
         }
         this.addDamage(this.dmgCalculator(element.difficulty, specialty));
       }else if(element.answer !== 'correct'){
-        game.dmgMultiplier = 1;
-        game.view.renderMultiplier();
         this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
       }
 
@@ -684,14 +681,16 @@ function Controller(){
   this.reduceDamage = function(amount){
     if(game.damageBank < 0 || game.damageBank < amount) return;
     if(game.turn === 1){
-        game.damageBank -= amount
+        game.damageBank -= amount;
         $('.dmg-meter-left').text(game.damageBank);
         $('.showDmg-left').text('-'+amount).fadeIn().fadeOut("slow");
     }else{
-        game.damageBank -= amount
+        game.damageBank -= amount;
         $('.dmg-meter-right').text(game.damageBank);
         $('.showDmg-right').text('-'+amount).fadeIn().fadeOut("slow");
     }
+    game.dmgMultiplier = 0;
+    game.view.renderMultiplier();
   }
 
   this.lastDamage = function(){
