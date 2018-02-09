@@ -60,11 +60,13 @@ function addClickHandlers(){
     $('.instruction').on('click', function(){
         $('.instruction-content').show();
         $('.modalContainer').hide();
+        $('.warning').addClass('hide');
         $('body').css('overflow-y', 'visible');
     });
 
     $('.back').on('click', function(){
         $('.modalContainer').show();
+        $('.warning').removeClass('hide');
         $('.instruction-content').hide();
         $('body').css('overflow-y', 'hidden');
     });
