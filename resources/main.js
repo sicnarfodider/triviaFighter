@@ -40,17 +40,21 @@ function addClickHandlers(){
 
     $('.readyButton').on('click',function(){
         clearInterval(game.roundTimer);
+        game.dmgMultiplier = 1;
         game.controller.questionBank(game.questions);
         game.roundTime=60;
         game.view.renderTimer();
         game.view.playerTurn();
+        game.view.renderMultiplier();
         $('.readyBanner').fadeOut();
         $('.questionModal').addClass('questionModalShow');
     });
 
     $('.dmgBtn').on('click', function(){
+        game.dmgMultiplier = 1;
         game.controller.dealDamage(game.damageBank);
-    })
+        game.view.renderMultiplier();
+    });
 }
 
 
@@ -73,7 +77,7 @@ function GameModel(){
     }
     this.winnerQuote = true;
     this.damageBank = null;
-    this.dmgMultiplier = 1;
+    this.dmgMultiplier = 0;
 
     this.endGame = function(){
         this.token = null;
@@ -91,7 +95,7 @@ function GameModel(){
             //built using the add
         }
         this.winnerQuote = true;
-        this.dmgMultiplier = 1;
+        this.dmgMultiplier = 0;
         $('.chuckNorrisQuote p').empty();
         $('.hitPoints').css('width','100%');
         $('.playerAvatar').removeClass('playerAvatarClicked');
@@ -406,6 +410,18 @@ function View(){
             $('.player1 .dmgBtn').removeClass('ready');
         }
     }
+    this.renderMultiplier = function(){
+        if(game.dmgMultiplier>1){
+            if(game.turn === 1){
+                $('.p1.combo-box:nth-child('+game.dmgMultiplier+')').addClass('on');
+            }else{
+                $('.p2.combo-box:nth-child('+game.dmgMultiplier+')').addClass('on');
+            }
+        }else{
+            $('.combo-box').removeClass('on');
+
+        }
+    }
 
 }
 
@@ -460,20 +476,24 @@ function Controller(){
   this.dmgCalculator = function(difficulty, boolean){
       var damagePercent = 0;
       if(boolean){
-          damagePercent+=7;
+          damagePercent+=5;
       }
       switch (difficulty){
           case 'easy':
-              damagePercent+=4;
+              damagePercent+=3;
               break;
           case 'medium':
-              damagePercent+=8;
+              damagePercent+=6;
               break;
           case 'hard':
-              damagePercent+=12;
+              damagePercent+=9;
               break;
       }
-      return damagePercent*game.dmgMultiplier
+    if(game.dmgMultiplier === 0){
+        return damagePercent
+    }else{
+        return parseInt(damagePercent*game.dmgMultiplier)
+    }
   };
 
   this.getSessionToken = function(){  //avoids receiving same question w/in 6 hour period
@@ -628,13 +648,15 @@ function Controller(){
   this.selectAnswer = function (element) {
       var specialty = false;
       if (element.answer === 'correct') {
-        game.dmgMultiplier+=1;
+        game.dmgMultiplier < 3 ? game.dmgMultiplier += 1 : game.dmgMultiplier = 3;
+        game.view.renderMultiplier();
         if (element.category === game.players[game.turn].character.category) {
             specialty = true;
         }
         this.addDamage(this.dmgCalculator(element.difficulty, specialty));
       }else if(element.answer !== 'correct'){
         game.dmgMultiplier = 1;
+        game.view.renderMultiplier();
         this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
       }
 
@@ -644,7 +666,7 @@ function Controller(){
   this.addDamage = function(amount){
     if(game.turn === 1){
 
-        game.damageBank += amount
+        game.damageBank += amount;
         $('.dmg-meter-left').text(game.damageBank);
         $('.showDmg-left').text('+'+amount);
         $('.showDmg-left').fadeIn();
