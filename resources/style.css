@@ -447,6 +447,27 @@ h1 {
     text-align: right;
 }
 
+.combo{
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+    /* background: white; */
+    height: 5vmin;
+    max-height: 3vmax;
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+}
+
+.combo-box{
+    width: 32%;
+    display: inline-block;
+    background-color: lightblue;
+    -webkit-transform: skew(-20deg);
+    -moz-transform: skew(-20deg);
+     -o-transform: skew(-20deg);
+}
+
 .showDmg-left, .showDmg-right{
     font-family: ss4;
     font-size: 8vmin;

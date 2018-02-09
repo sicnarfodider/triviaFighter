@@ -90,6 +90,7 @@ function GameModel(){
             //built using the add
         }
         this.winnerQuote = true;
+        this.dmgMultiplier = 1;
         $('.chuckNorrisQuote p').empty();
         $('.hitPoints').css('width','100%');
         $('.playerAvatar').removeClass('playerAvatarClicked');
@@ -266,9 +267,8 @@ function View(){
         var ansList = entry.incorrect_answers; //array of incorrect answers
         var correctAns = entry.correct_answer;
         var randomNum = Math.floor(Math.random()*4);
-        // console.log(correctAns);
+        console.log(correctAns);
         ansList.splice(randomNum,0, correctAns);
-        // game.questionsLeft--;
         var catSpan = $('<span>',{
             text: difficulty +": "+ entry.category,
             'class': 'category'
@@ -279,7 +279,7 @@ function View(){
         }
     };
 
-    this.createAnsDiv=function(num,text, entry){
+    this.createAnsDiv = function(num,text, entry){
         var ansDiv= $('<div>',{
             id: 'q'+num,
             'class': 'answer',
@@ -454,23 +454,23 @@ function Controller(){
 
   };
 
-  this.dmgCalculator = function(difficulty, boolean){
+  this.dmgCalculator = function(difficulty, boolean, multiplier){
       var damagePercent = 0;
       if(boolean){
           damagePercent+=7;
       }
       switch (difficulty){
           case 'easy':
-              damagePercent+=5;
+              damagePercent+=4;
               break;
           case 'medium':
-              damagePercent+=10;
+              damagePercent+=8;
               break;
           case 'hard':
-              damagePercent+=15;
+              damagePercent+=12;
               break;
       }
-      return damagePercent
+      return damagePercent*multiplier
   };
 
   this.getSessionToken = function(){  //avoids receiving same question w/in 6 hour period
@@ -624,14 +624,15 @@ function Controller(){
 
   this.selectAnswer = function (element) {
       var specialty = false;
-
       if (element.answer === 'correct') {
-          if (element.category === game.players[game.turn].character.category) {
-              specialty = true;
-          }
-          this.addDamage(this.dmgCalculator(element.difficulty, specialty));
+        game.dmgMultiplier+=1;
+        if (element.category === game.players[game.turn].character.category) {
+            specialty = true;
+        }
+        this.addDamage(this.dmgCalculator(element.difficulty, specialty, game.dmgMultiplier));
       }else if(element.answer !== 'correct'){
-         this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
+        game.dmgMultiplier = 1;
+        this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
       }
 
       game.view.renderQuestion(game.questionBank);
