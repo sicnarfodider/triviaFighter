@@ -33,6 +33,7 @@ function addClickHandlers(){
 
     $('.playAgain').click(function(){
         game.endGame();
+        game.resetCharacterSelection();
         $('.loadScreen').hide();
         $('.modalContainer').fadeIn(2000);
         $('.winnerModal').hide();
@@ -117,6 +118,14 @@ function GameModel(){
         game.controller.getSessionToken();
         $('.row:last-child').removeClass('readyPlayButton');
 
+    }
+
+    this.resetCharacterSelection = function(){
+        $('.playerContainerLeft').css('background-image', "none");
+        $('.playerContainerRight').css('background-image', "none");
+        $('.playerOnHoverLeft div span').text("");
+        $('.playerOnHoverRight div span').text("");
+        $('.characterName').text("");
     }
 
     this.availableCharacters = {
