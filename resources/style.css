@@ -212,21 +212,29 @@ h1 {
 }
 
 
-.row:last-child {
+
+
+.playButtonParent {
   position: absolute;
   bottom: 3vh;
   margin: 0 auto;
-  border: 5px solid darkred;
+  border: 5px solid #5f5353;
   color: white;
   border-radius: 5%;
-  background-color: red;
+  background-color: grey;
   left: 50%;
   transform: translateX(-50%);
   box-shadow: 0 0 40px black;
   cursor: pointer;
 }
 
-.row:last-child:hover {
+
+.readyPlayButton{
+  border: 5px solid darkred;
+  background-color: red;
+}
+
+.readyPlayButton:hover{
   border-color: yellow;
   box-shadow: 0 0 80px black;
 }
