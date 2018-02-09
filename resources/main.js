@@ -40,26 +40,33 @@ function addClickHandlers(){
 
     $('.readyButton').on('click',function(){
         clearInterval(game.roundTimer);
+        game.dmgMultiplier = 0;
         game.controller.questionBank(game.questions);
         game.roundTime=60;
+        game.view.renderComboButton()
         game.view.renderTimer();
         game.view.playerTurn();
+        game.view.renderMultiplier();
         $('.readyBanner').fadeOut();
         $('.questionModal').addClass('questionModalShow');
     });
 
     $('.dmgBtn').on('click', function(){
+        game.dmgMultiplier = 0;
         game.controller.dealDamage(game.damageBank);
+        game.view.renderComboButton()
+        game.view.renderMultiplier();
     });
-
     $('.instruction').on('click', function(){
         $('.instruction-content').show();
         $('.modalContainer').hide();
+        $('.warning').addClass('hide');
         $('body').css('overflow-y', 'visible');
     });
 
     $('.back').on('click', function(){
         $('.modalContainer').show();
+        $('.warning').removeClass('hide');
         $('.instruction-content').hide();
         $('body').css('overflow-y', 'hidden');
     });
@@ -85,6 +92,7 @@ function GameModel(){
     }
     this.winnerQuote = true;
     this.damageBank = null;
+    this.dmgMultiplier = 0;
 
     this.endGame = function(){
         this.token = null;
@@ -102,6 +110,7 @@ function GameModel(){
             //built using the add
         }
         this.winnerQuote = true;
+        this.dmgMultiplier = 0;
         $('.chuckNorrisQuote p').empty();
         $('.hitPoints').css('width','100%');
         $('.playerAvatar').removeClass('playerAvatarClicked');
@@ -280,9 +289,8 @@ function View(){
         var ansList = entry.incorrect_answers; //array of incorrect answers
         var correctAns = entry.correct_answer;
         var randomNum = Math.floor(Math.random()*4);
-        // console.log(correctAns);
+        console.log(correctAns);
         ansList.splice(randomNum,0, correctAns);
-        // game.questionsLeft--;
         var catSpan = $('<span>',{
             text: difficulty +": "+ entry.category,
             'class': 'category'
@@ -293,7 +301,7 @@ function View(){
         }
     };
 
-    this.createAnsDiv=function(num,text, entry){
+    this.createAnsDiv = function(num,text, entry){
         var ansDiv= $('<div>',{
             id: 'q'+num,
             'class': 'answer',
@@ -332,6 +340,7 @@ function View(){
               game.playButtonClickable = false;
               game.avatarClickable = false;
               game.turn = 1;
+              game.view.renderComboButton()
 
 
               $('.modalContainer').hide();
@@ -387,15 +396,17 @@ function View(){
     this.renderTimer = function(){   // renders the timer for each player
         game.roundTimer  = setInterval(function() {
             game.roundTime--;
+            game.roundTime <= 10 ? $('.timer').addClass('lastTen') : $('.timer').removeClass('lastTen')
             $('.currentTime').text(game.roundTime);
             if(game.roundTime===0){
+                clearInterval(game.roundTimer);
+                game.dmgMultiplier = 0;
+                game.view.renderMultiplier();
                 $('.questionModal').removeClass('questionModalShow');
                     game.damageBank = null;
-                    $('.dmg-meter-right').text('');
-                    $('.dmg-meter-left').text('');
-                clearInterval(game.roundTimer);
+                    $('.dmg-meter-right').text('0');
+                    $('.dmg-meter-left').text('0');
                 if(game.turn===1){
-
                     game.turn=2;
                     $('.readyButton span').text('P2');
                 }else{
@@ -418,6 +429,33 @@ function View(){
             $('.p2name').addClass('currentPlayerTurn');
             $('.player2 .dmgBtn').addClass('ready');
             $('.player1 .dmgBtn').removeClass('ready');
+        }
+    }
+
+    this.renderComboButton = function(){
+        var p1 = $('.dmgBtn[player="p1"]');
+        var p2 = $('.dmgBtn[player="p2"]');
+        if(game.damageBank>0){
+            if(game.turn === 1){
+                p1.css('display','inline-block')
+            }else{
+                p2.css('display','inline-block')
+            }
+        }else{
+            $('.dmgBtn').css('display','none');
+        }
+    }
+
+    this.renderMultiplier = function(){
+        if(game.dmgMultiplier>0){
+            if(game.turn === 1){
+                $(".p1.combo-box[multiplier="+game.dmgMultiplier+"]").addClass('on');
+            }else{
+                $(".p2.combo-box[multiplier="+game.dmgMultiplier+"]").addClass('on');
+            }
+        }else{
+            $('.combo-box').removeClass('on');
+
         }
     }
 
@@ -459,10 +497,10 @@ function Controller(){
     var hpTarget= null;
     if(game.turn===1){
         hpTarget = game.players[2]['hitPoints'];
-        $('.dmg-meter-left').text('');
+        $('.dmg-meter-left').text('0');
     }else{
         hpTarget = game.players[1]['hitPoints']
-        $('.dmg-meter-right').text('');
+        $('.dmg-meter-right').text('0');
     }
     game.view.renderDmg(hpTarget);
     if(game.questionBank===0 || game.players['1']['hitPoints']<=0 ||  game.players['2']['hitPoints']<=0){
@@ -474,20 +512,24 @@ function Controller(){
   this.dmgCalculator = function(difficulty, boolean){
       var damagePercent = 0;
       if(boolean){
-          damagePercent+=7;
+          damagePercent+=5;
       }
       switch (difficulty){
           case 'easy':
-              damagePercent+=5;
+              damagePercent+=3;
               break;
           case 'medium':
-              damagePercent+=10;
+              damagePercent+=6;
               break;
           case 'hard':
-              damagePercent+=15;
+              damagePercent+=9;
               break;
       }
-      return damagePercent
+    if(game.dmgMultiplier === 0){
+        return damagePercent
+    }else{
+        return parseInt(damagePercent*game.dmgMultiplier)
+    }
   };
 
   this.getSessionToken = function(){  //avoids receiving same question w/in 6 hour period
@@ -562,7 +604,6 @@ function Controller(){
 
 
     this.getCharacterInfo = function (character) {
-        console.log('get character function called');
         var loadingTimeout = setTimeout(function(){
             $('.loading-error').css('display','block');
         }, 10000);
@@ -642,23 +683,24 @@ function Controller(){
 
   this.selectAnswer = function (element) {
       var specialty = false;
-
       if (element.answer === 'correct') {
-          if (element.category === game.players[game.turn].character.category) {
-              specialty = true;
-          }
-          this.addDamage(this.dmgCalculator(element.difficulty, specialty));
+        game.dmgMultiplier < 4 ? game.dmgMultiplier += 1 : game.dmgMultiplier = 4;
+        game.view.renderMultiplier();
+        if (element.category === game.players[game.turn].character.category) {
+            specialty = true;
+        }
+        this.addDamage(this.dmgCalculator(element.difficulty, specialty));
       }else if(element.answer !== 'correct'){
-         this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
+        this.reduceDamage(this.dmgCalculator(element.difficulty, specialty));
       }
-
+      game.view.renderComboButton()
       game.view.renderQuestion(game.questionBank);
   };
 
   this.addDamage = function(amount){
     if(game.turn === 1){
 
-        game.damageBank += amount
+        game.damageBank += amount;
         $('.dmg-meter-left').text(game.damageBank);
         $('.showDmg-left').text('+'+amount);
         $('.showDmg-left').fadeIn();
@@ -676,14 +718,16 @@ function Controller(){
   this.reduceDamage = function(amount){
     if(game.damageBank < 0 || game.damageBank < amount) return;
     if(game.turn === 1){
-        game.damageBank -= amount
+        game.damageBank -= amount;
         $('.dmg-meter-left').text(game.damageBank);
         $('.showDmg-left').text('-'+amount).fadeIn().fadeOut("slow");
     }else{
-        game.damageBank -= amount
+        game.damageBank -= amount;
         $('.dmg-meter-right').text(game.damageBank);
         $('.showDmg-right').text('-'+amount).fadeIn().fadeOut("slow");
     }
+    game.dmgMultiplier = 0;
+    game.view.renderMultiplier();
   }
 
   this.lastDamage = function(){

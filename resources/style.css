@@ -88,19 +88,19 @@ a {
                 1px -1px black;
     letter-spacing: 4px;
     width: 90%;
-    margin: 40% auto;
+    margin: 40vmin auto;
 }
 
 .infoTextContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
 }
 
 .infoHeader {
-  color: #ffdd00;
+    color: #ffdd00;
 }
 .infoHeaderName, .infoHeaderNameRight {
     color: yellow;
@@ -186,57 +186,57 @@ a {
 }
 
 .infoRow {
-  font-size: 2.25vmin;
-  color: whitesmoke;
-  margin: 0.5vh auto;
-  text-align: center;
+    font-size: 2.25vmin;
+    color: whitesmoke;
+    margin: 0.5vh auto;
+    text-align: center;
 }
 
 .gameTitle {
-  color: #ffdd00;
-  width: 100%;
-  text-shadow: 5px 5px 10px black;
-  font-size: 6vmin;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: ss4;
-  text-align: center;
-  pointer-events: none;
+    color: #ffdd00;
+    width: 100%;
+    text-shadow: 5px 5px 10px black;
+    font-size: 6vmin;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: ss4;
+    text-align: center;
+    pointer-events: none;
 }
 
 h1 {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 
 
 
 .playButtonParent {
-  position: absolute;
-  bottom: 3vh;
-  margin: 0 auto;
-  border: 5px solid #5f5353;
-  color: white;
-  border-radius: 5%;
-  background-color: grey;
-  left: 50%;
-  transform: translateX(-50%);
-  box-shadow: 0 0 40px black;
-  cursor: pointer;
+    position: absolute;
+    bottom: 3vh;
+    margin: 0 auto;
+    border: 5px solid #5f5353;
+    color: white;
+    border-radius: 5%;
+    background-color: grey;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 40px black;
 }
 
 
 .readyPlayButton{
-  border: 5px solid darkred;
-  background-color: red;
+    border: 5px solid darkred;
+    background-color: red;
 }
 
 .readyPlayButton:hover{
-  border-color: yellow;
-  box-shadow: 0 0 80px black;
+    cursor: pointer;
+    border-color: yellow;
+    box-shadow: 0 0 80px black;
 }
 
 .playerAvatar {
@@ -251,15 +251,15 @@ h1 {
 }
 
 .playerAvatar:first-child {
-  margin-right: 0.75vmin;
-  left: 0;
-  position: absolute;
+    margin-right: 0.75vmin;
+    left: 0;
+    position: absolute;
 }
 
 .playerAvatar:last-child {
-  margin-left: 0.75vmin;
-  position: absolute;
-  right: 0;
+    margin-left: 0.75vmin;
+    position: absolute;
+    right: 0;
 }
 
 .playerAvatar:hover {
@@ -401,8 +401,13 @@ h1 {
     text-shadow: 3px 3px #fafafa, -3px -3px #f8f3f3, -3px 3px white, 3px -3px #f6f6f6;
 }
 
+.lastTen {
+    animation: pulse 2s infinite;
+    color: red;
+}
+
 .p1name {
-  display: inline-block;
+    display: inline-block;
     color: whitesmoke;
     position: absolute;
     font-family: fighting;
@@ -414,7 +419,7 @@ h1 {
 }
 
 .p2name {
-  display: inline-block;
+    display: inline-block;
     color: whitesmoke;
     position: absolute;
     font-family: fighting;
@@ -430,11 +435,11 @@ h1 {
 }
 
 .currentTime {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: inline-block;
 }
 
 .player1, .player2 {
@@ -465,20 +470,58 @@ h1 {
     text-align: right;
 }
 
+.dmg>div{
+    display: inline-block;
+    width: 69%;
+    max-width: 15vmax;
+}
+
+.combo{
+    display: inline-block;
+    width: 100%;
+    height: 5vmin;
+    max-height: 3vmax;
+    position: relative;
+}
+
+.combo-box{
+    width: 29%;
+    height: 60%;
+    display: inline-block;
+    background-color: #e2e6e8;
+    border: 2px solid darkblue;
+    -webkit-transform: skew(22deg);
+    -moz-transform: skew(22deg);
+    -o-transform: skew(22deg);
+}
+
+.combo-box.p2{
+    -webkit-transform: skew(-22deg);
+    -moz-transform: skew(-22deg);
+    -o-transform: skew(-22deg);
+}
+
+.combo-box.on{
+    background-color: #c900ff;
+    filter: hue-rotate(90deg);
+    background-image: url(images/backgrounds/lightning.gif);
+    background-repeat: no-repeat;
+}
+
 .showDmg-left, .showDmg-right{
     font-family: ss4;
     font-size: 8vmin;
     color: yellow;
     text-shadow: 1px 1px black, -1px -1px black, -1px 1px black, 1px -1px black;
-        width: 100%;
+    width: 100%;
     position: absolute;
     bottom: 15%;
     text-align: right;
 }
 
 .showDmg-right, .rightDmg{
-  transform: rotateY(180deg);
-  text-align: left;
+    transform: rotateY(180deg);
+    text-align: left;
 }
 
 .dmg .dmg-meter-left, .dmg .dmg-meter-right{
@@ -505,7 +548,7 @@ h1 {
 
 .questionModal {
     width: 45vw;
-    height: 35vw;
+    height: 60vh;
     border: 4px solid silver;
     position: absolute;
     top: 57%;
@@ -544,6 +587,7 @@ h1 {
     font-size: 2vmin;
     width: 45%;
     height: 20%;
+    max-height: 9vmin;
     border: 1px solid whitesmoke;
     display: inline-block;
     box-sizing: border-box;
@@ -677,81 +721,81 @@ h1 {
 
 
 .readyBanner {
-  width: 100vw;
-  height: 25vh;
-  border-top: 7px solid darkred;
-  border-bottom: 7px solid darkred;
-  background-color: red;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  display: none;
-  box-shadow: 0px 0px 120px black;
+    width: 100vw;
+    height: 25vh;
+    border-top: 7px solid darkred;
+    border-bottom: 7px solid darkred;
+    background-color: red;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    box-shadow: 0px 0px 120px black;
 }
 
 .readyButton {
-  width: 40vh;
-  height: 30vh;
-  border: 7px solid darkred;
-  background-color: red;
-  border-radius: 47%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  color: white;
-  font-family: fighting, ss4;
-  text-align: center;
-  padding-top: 0vh;
-  font-size: 11vh;
-  text-shadow: 3px 3px 13px black;
-  box-shadow: 0px 0px 60px black;
-  user-select: none;
-  cursor: pointer;
+    width: 40vh;
+    height: 30vh;
+    border: 7px solid darkred;
+    background-color: red;
+    border-radius: 47%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    font-family: fighting, ss4;
+    text-align: center;
+    padding-top: 0vh;
+    font-size: 11vh;
+    text-shadow: 3px 3px 13px black;
+    box-shadow: 0px 0px 60px black;
+    user-select: none;
+    cursor: pointer;
 }
 
 .readyButton:hover {
-  border: 7px solid yellow;
+    border: 7px solid yellow;
 }
 
 
 /*=============== Load Screen ==================*/
 
 .loadScreen {
-  background-image: url('images/backgrounds/particleBG.gif');
-  width: 100vw;
-  height: 100vh;
-  background-color: #475eff;
-  text-align: center;
+    background-image: url('images/backgrounds/particleBG.gif');
+    width: 100vw;
+    height: 100vh;
+    background-color: #475eff;
+    text-align: center;
 }
 
 .loadingTitle {
-  color: yellow;
-  text-shadow: 0 0 20px black;
-  font-family: ss4;
-  font-size: 10vmin;
-  position: relative;
-  top: 10vh;
+    color: yellow;
+    text-shadow: 0 0 20px black;
+    font-family: ss4;
+    font-size: 10vmin;
+    position: relative;
+    top: 10vh;
 }
 
 .loadingBarContainer {
-  border: 4px solid black;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50vw;
-  border-radius: 5px;
-  height: 10vh;
-  transform: translate(-50%,-50%);
+    border: 4px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50vw;
+    border-radius: 5px;
+    height: 10vh;
+    transform: translate(-50%,-50%);
 }
 
 .loadingBar {
-  position: relative;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 10%;
-  background-color: red;
+    position: relative;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 10%;
+    background-color: red;
 }
 
 .loading-error{
@@ -764,15 +808,7 @@ h1 {
     letter-spacing: 4px;
     display: none;
 }
-/************MISC********************/
-.hide {
-    display: none;
-}
 
-.show {
-    display: block;
-}
-/************MISC********************/
 
 @media screen and (orientation: portrait) {
 
@@ -820,3 +856,41 @@ h1 {
     }
 
 }
+
+@media screen
+    and (max-width: 1000px)
+    and (max-height: 350px){
+
+    .questionContainer{
+        font-size: 3.5vmin;
+    }
+
+    .answer{
+        font-size: 3vmin;
+    }
+}
+
+@media screen and (max-height:320px){
+    .warning{
+        display: block;
+    }
+}
+
+/*********************** keyframes **********************/
+@keyframes pulse {
+    0% { font-size: : 12vmin ; }
+    40% { font-size: : 16vmin; }
+    50% { font-size: : 12vmin ; }
+    70% { font-size: : 16vmin; }
+    100% { font-size: : 12vmin ; }
+}
+/*********************** keyframes end **********************/
+/************MISC********************/
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+/************MISC********************/
