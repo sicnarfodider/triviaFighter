@@ -117,6 +117,7 @@ function GameModel(){
         $('.playerAvatar').removeClass('playerAvatarClicked');
         game.controller.getSessionToken();
         $('.row:last-child').removeClass('readyPlayButton');
+        $('.dmg').hide();
 
     }
 
@@ -433,11 +434,15 @@ function View(){
             $('.p1name').addClass('currentPlayerTurn');
             $('.player1 .dmgBtn').addClass('ready');
             $('.player2 .dmgBtn').removeClass('ready');
+            $('.player1 > .dmg').show();
+            $('.player2 > .dmg').hide();
         } else {
             $('.p1name').removeClass('currentPlayerTurn');
             $('.p2name').addClass('currentPlayerTurn');
             $('.player2 .dmgBtn').addClass('ready');
             $('.player1 .dmgBtn').removeClass('ready');
+            $('.player2 > .dmg').show();
+            $('.player1 > .dmg').hide();
         }
     }
 
@@ -725,13 +730,22 @@ function Controller(){
   }
 
   this.reduceDamage = function(amount){
-    if(game.damageBank < 0 || game.damageBank < amount) return;
+    if(game.damageBank < 0) return null;
+
     if(game.turn === 1){
-        game.damageBank -= amount;
+        if(game.damageBank < amount){
+            game.damageBank = null;
+        }else{
+           game.damageBank -= amount;
+        }
         $('.dmg-meter-left').text(game.damageBank);
         $('.showDmg-left').text('-'+amount).fadeIn().fadeOut("slow");
     }else{
-        game.damageBank -= amount;
+        if(game.damageBank < amount){
+            game.damageBank = null;
+        }else{
+           game.damageBank -= amount;
+        }
         $('.dmg-meter-right').text(game.damageBank);
         $('.showDmg-right').text('-'+amount).fadeIn().fadeOut("slow");
     }

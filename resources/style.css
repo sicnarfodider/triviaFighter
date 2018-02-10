@@ -464,6 +464,7 @@ h1 {
 }
 
 .dmg{
+    display:none;
     width: 100%;
     position: absolute;
     bottom: 0;
