@@ -117,6 +117,7 @@ function GameModel(){
         $('.playerAvatar').removeClass('playerAvatarClicked');
         game.controller.getSessionToken();
         $('.row:last-child').removeClass('readyPlayButton');
+        $('.dmg').hide();
 
     }
 
@@ -433,11 +434,15 @@ function View(){
             $('.p1name').addClass('currentPlayerTurn');
             $('.player1 .dmgBtn').addClass('ready');
             $('.player2 .dmgBtn').removeClass('ready');
+            $('.player1 > .dmg').show();
+            $('.player2 > .dmg').hide();
         } else {
             $('.p1name').removeClass('currentPlayerTurn');
             $('.p2name').addClass('currentPlayerTurn');
             $('.player2 .dmgBtn').addClass('ready');
             $('.player1 .dmgBtn').removeClass('ready');
+            $('.player2 > .dmg').show();
+            $('.player1 > .dmg').hide();
         }
     }
 
