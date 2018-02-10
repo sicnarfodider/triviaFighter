@@ -725,13 +725,22 @@ function Controller(){
   }
 
   this.reduceDamage = function(amount){
-    if(game.damageBank < 0 || game.damageBank < amount) return;
+    if(game.damageBank < 0) return null;
+
     if(game.turn === 1){
-        game.damageBank -= amount;
+        if(game.damageBank < amount){
+            game.damageBank = null;
+        }else{
+           game.damageBank -= amount;
+        }
         $('.dmg-meter-left').text(game.damageBank);
         $('.showDmg-left').text('-'+amount).fadeIn().fadeOut("slow");
     }else{
-        game.damageBank -= amount;
+        if(game.damageBank < amount){
+            game.damageBank = null;
+        }else{
+           game.damageBank -= amount;
+        }
         $('.dmg-meter-right').text(game.damageBank);
         $('.showDmg-right').text('-'+amount).fadeIn().fadeOut("slow");
     }
