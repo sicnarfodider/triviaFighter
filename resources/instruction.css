@@ -16,10 +16,6 @@ body{
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background-image: url('images/backgrounds/particleBG.gif');
-    background-position: center;
-    background-size: cover;
-    background-color: #6c6c6c;
 }
 
 li {
@@ -33,6 +29,10 @@ a{
 }
 
 .instruction-content{
+    background-image: url('images/backgrounds/particleBG.gif');
+    background-position: center;
+    background-size: cover;
+    background-color: #6c6c6c;
     position: relative;
     font-family: fighting;
     width: 100vw;
@@ -80,6 +80,11 @@ a{
 .back{
     margin-top: 3%;
     font-size: 2em;
+    cursor: pointer;
+}
+
+.instruction-content .backBtn {
+    width: auto;
 }
 
 .bottom::before{
