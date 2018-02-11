@@ -816,6 +816,10 @@ h1 {
         display: block;
     }
 
+    .warning h1:nth-child(2){
+        display: none;
+    }
+
     .modalContainer div, .gameBoard, .winnerModal, .readyBanner{
         display: none;
     }
@@ -873,6 +877,9 @@ h1 {
 @media screen and (max-height:320px){
     .warning{
         display: block;
+    }
+    .warning h1:nth-child(1){
+        display: none;
     }
 }
 
