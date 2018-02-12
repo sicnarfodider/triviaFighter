@@ -280,6 +280,9 @@ function View(){
 
     this.renderQuestion = function(qArray){ //renders Question and answers into Arena
         $('.answer').remove();
+        if(game.questions.easy.length < 10 ){
+            game.controller.buildQuestionShoe();
+        }
         if(game.questionBank.length===0){
             game.controller.lastDamage();
             $('.questionModal').removeClass('questionModalShow');
@@ -607,6 +610,8 @@ function Controller(){
           }
       });
     };
+
+
     this.buildQuestionShoe = function () {
       var difficulty = ['easy', 'medium', 'hard'];
 
