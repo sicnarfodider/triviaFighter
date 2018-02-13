@@ -422,9 +422,11 @@ function View(){
                 if(game.turn===1){
                     game.turn=2;
                     $('.readyButton span').text('P2');
+                    $('.player1 > .dmg').hide();
                 }else{
                     game.turn=1;
                     $('.readyButton span').text('P1');
+                    $('.player2 > .dmg').hide();
                 }
                 $('.readyBanner').show();
                 }
