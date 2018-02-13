@@ -447,6 +447,7 @@ function View(){
             $('.player2 > .dmg').show();
             $('.player1 > .dmg').hide();
         }
+
     }
 
     this.renderComboButton = function(){
@@ -579,8 +580,10 @@ function Controller(){
       }else{
           if (game.turn === 1) {
               game.turn += 1;
+              $('.player1 > .dmg').hide();
           } else {
               game.turn -= 1;
+              $('.player2 > .dmg').hide();
           }
           $('.readyBanner').slideDown('slow');
       }
