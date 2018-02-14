@@ -881,7 +881,7 @@ h1 {
 }
 
 
-@media screen and (max-height:320px){
+@media screen and (max-height:280px){
     .warning{
         display: block;
     }
