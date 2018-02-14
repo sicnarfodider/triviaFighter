@@ -280,6 +280,9 @@ function View(){
 
     this.renderQuestion = function(qArray){ //renders Question and answers into Arena
         $('.answer').remove();
+        if(game.questions.easy.length < 10 ){
+            game.controller.buildQuestionShoe();
+        }
         if(game.questionBank.length===0){
             game.controller.lastDamage();
             $('.questionModal').removeClass('questionModalShow');
@@ -299,7 +302,6 @@ function View(){
         var ansList = entry.incorrect_answers; //array of incorrect answers
         var correctAns = entry.correct_answer;
         var randomNum = Math.floor(Math.random()*4);
-        console.log(correctAns);
         ansList.splice(randomNum,0, correctAns);
         var catSpan = $('<span>',{
             text: difficulty +": "+ entry.category,
@@ -419,9 +421,11 @@ function View(){
                 if(game.turn===1){
                     game.turn=2;
                     $('.readyButton span').text('P2');
+                    $('.player1 > .dmg').hide();
                 }else{
                     game.turn=1;
                     $('.readyButton span').text('P1');
+                    $('.player2 > .dmg').hide();
                 }
                 $('.readyBanner').show();
                 }
@@ -444,6 +448,7 @@ function View(){
             $('.player2 > .dmg').show();
             $('.player1 > .dmg').hide();
         }
+
     }
 
     this.renderComboButton = function(){
@@ -576,8 +581,10 @@ function Controller(){
       }else{
           if (game.turn === 1) {
               game.turn += 1;
+              $('.player1 > .dmg').hide();
           } else {
               game.turn -= 1;
+              $('.player2 > .dmg').hide();
           }
           $('.readyBanner').slideDown('slow');
       }
@@ -607,6 +614,8 @@ function Controller(){
           }
       });
     };
+
+
     this.buildQuestionShoe = function () {
       var difficulty = ['easy', 'medium', 'hard'];
 
