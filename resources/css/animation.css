@@ -1,4 +1,4 @@
-@keyframes spinner {
+@keyframes alternate-spin {
     0% {
       transform: rotateY(0deg);
     }
