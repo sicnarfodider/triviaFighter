@@ -864,6 +864,10 @@ h1 {
         text-shadow: 1.5px 1.5px #fafafa, -1.5px -1.5px #f8f3f3, -1.5px 1.5px white, 1.5px -1.5px #f6f6f6;
     }
 
+    .instruction-content{
+        display: none;
+    }
+
 }
 
 /*************media query**********************/
