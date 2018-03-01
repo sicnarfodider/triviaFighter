@@ -5,11 +5,11 @@
 
 @font-face {
     font-family: ss4;
-    src: url(Font/SSF4.ttf)
+    src: url(../fonts/SSF4.ttf)
 }
 @font-face {
     font-family: fighting;
-    src: url(Font/Fighting.TTF)
+    src: url(../fonts/Fighting.TTF)
 }
 body {
     margin: 0;
@@ -34,7 +34,7 @@ a {
     height: 100vh;
     width: 100vw;
     position: relative;
-    background-image: url('images/backgrounds/particleBG.gif');
+    background-image: url('../images/backgrounds/particleBG.gif');
     background-position: center;
     background-size: cover;
     background-color: #475eff;
@@ -285,58 +285,58 @@ h1 {
     outline: 0;
 }
 
-#ironman, #deadpool, #batman, #magneto, #captainamerica, #domino, #thor, #wonderwoman, #mystique, #scarletwitch, #superman, #thething {
+.playerAvatar {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 }
 
 #ironman {
-    background-image: url('images/avatars/iron-man.png');
+    background-image: url('../images/avatars/iron-man.png');
 }
 
 #deadpool {
-    background-image: url('images/avatars/deadpool.png');
+    background-image: url('../images/avatars/deadpool.png');
 }
 
 #batman {
-    background-image: url('images/avatars/batman.png');
+    background-image: url('../images/avatars/batman.png');
 }
 
 #magneto {
-    background-image: url('images/avatars/magneto.png');
+    background-image: url('../images/avatars/magneto.png');
 }
 
 #captainamerica {
-    background-image: url('images/avatars/captain-america.png');
+    background-image: url('../images/avatars/captain-america.png');
 }
 
 #domino {
-    background-image: url('images/avatars/domino.png');
+    background-image: url('../images/avatars/domino.png');
 }
 
 #thor {
-    background-image: url('images/avatars/thor.png');
+    background-image: url('../images/avatars/thor.png');
 }
 
 #wonderwoman {
-    background-image: url('images/avatars/wonder-woman.png');
+    background-image: url('../images/avatars/wonder-woman.png');
 }
 
 #mystique {
-    background-image: url('images/avatars/mystique.png');
+    background-image: url('../images/avatars/mystique.png');
 }
 
 #scarletwitch {
-    background-image: url('images/avatars/scarlet-witch.png');
+    background-image: url('../images/avatars/scarlet-witch.png');
 }
 
 #superman {
-    background-image: url('images/avatars/superman.png');
+    background-image: url('../images/avatars/superman.png');
 }
 
 #thething {
-    background-image: url('images/avatars/thing.png');
+    background-image: url('../images/avatars/thing.png');
 }
 
 /************************** gameboard ****************************/
@@ -506,7 +506,7 @@ h1 {
 .combo-box.on{
     background-color: #c900ff;
     filter: hue-rotate(90deg);
-    background-image: url(images/backgrounds/lightning.gif);
+    background-image: url(../images/backgrounds/lightning.gif);
     background-repeat: no-repeat;
 }
 
@@ -631,7 +631,7 @@ h1 {
     width: 100vw;
     border: 1px solid black;
     display: none;
-    background-image: url('images/backgrounds/background6.gif');
+    background-image: url('../images/backgrounds/background6.gif');
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
@@ -767,7 +767,7 @@ h1 {
 /*=============== Load Screen ==================*/
 
 .loadScreen {
-    background-image: url('images/backgrounds/particleBG.gif');
+    background-image: url('../images/backgrounds/particleBG.gif');
     width: 100vw;
     height: 100vh;
     background-color: #475eff;

@@ -5,11 +5,11 @@
 
 @font-face {
     font-family: ss4;
-    src: url(Font/SSF4.ttf)
+    src: url(../fonts/SSF4.ttf)
 }
 @font-face {
     font-family: fighting;
-    src: url(Font/Fighting.TTF)
+    src: url(../fonts/Fighting.TTF)
 }
 
 body{
@@ -29,7 +29,7 @@ a{
 }
 
 .instruction-content{
-    background-image: url('images/backgrounds/particleBG.gif');
+    background-image: url('../images/backgrounds/particleBG.gif');
     background-position: center;
     background-size: cover;
     background-color: #6c6c6c;
