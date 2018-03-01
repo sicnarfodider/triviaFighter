@@ -1,6 +1,10 @@
 # TRIVIA FIGHTER
 A two player Marvel vs DC fighting game with a core trivia mechanic.
 
+> [**PLAY IT LIVE**](http://triviafighter.redidofrancis.space/)
+______________________________________________________________
+> [**GAME FLOW CHART**](resources/etc/flow.pdf)
+
 ### Technologies
 - HTML5
 - CSS3
