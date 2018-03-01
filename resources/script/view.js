@@ -187,14 +187,14 @@ function View(){
             $('.p1name').addClass('currentPlayerTurn');
             $('.player1 .dmgBtn').addClass('ready');
             $('.player2 .dmgBtn').removeClass('ready');
-            $('.player1 > .dmg').show();
+            $('.player1 > .dmg').css('display','flex');
             $('.player2 > .dmg').hide();
         } else {
             $('.p1name').removeClass('currentPlayerTurn');
             $('.p2name').addClass('currentPlayerTurn');
             $('.player2 .dmgBtn').addClass('ready');
             $('.player1 .dmgBtn').removeClass('ready');
-            $('.player2 > .dmg').show();
+            $('.player2 > .dmg').css('display','flex');
             $('.player1 > .dmg').hide();
         }
 
@@ -205,12 +205,12 @@ function View(){
         var p2 = $('.dmgBtn[player="p2"]');
         if(game.damageBank>0){
             if(game.turn === 1){
-                p1.css('display','inline-block')
+                p1.css('opacity','1')
             }else{
-                p2.css('display','inline-block')
+                p2.css('opacity','1')
             }
         }else{
-            $('.dmgBtn').css('display','none');
+            $('.dmgBtn').css('opacity','0');
         }
     }
 
